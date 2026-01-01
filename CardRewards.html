@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardRewards - Credit Card Rewards Tracker | Apple Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --primary: #8E44AD;
+            --secondary: #3498DB;
+            --accent: #2ECC71;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --gray: #95A5A6;
+            --white: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #7D3C98;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .app-badge {
+            display: inline-block;
+            background-color: var(--dark);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .features {
+            padding: 5rem 2rem;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .screenshots {
+            padding: 5rem 2rem;
+            background-color: var(--light);
+        }
+
+        .screenshots-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .screenshot {
+            width: 250px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+
+        .testimonials {
+            padding: 5rem 2rem;
+            background-color: var(--white);
+        }
+
+        .testimonials-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 16px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .download {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .download p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .app-store-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .app-store-btn i {
+            font-size: 1.5rem;
+            margin-right: 0.8rem;
+        }
+
+        footer {
+            padding: 3rem 2rem;
+            background-color: var(--dark);
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            padding: 5rem 2rem;
+            background-color: var(--light);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-credit-card"></i>
+            RewardWallet
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+        <button class="download-btn">Get the App</button>
+    </header>
+
+    <section class="hero">
+        <h1>Maximize Your Credit Card Rewards</h1>
+        <p>Track, optimize, and redeem rewards from all your credit cards in one simple app.</p>
+        <div class="app-badge">
+            <i class="fab fa-apple"></i> Available on the App Store
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">1.2M+</div>
+                <div class="stat-label">Points Tracked</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$4.7M+</div>
+                <div class="stat-label">Rewards Redeemed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">250K+</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.9</div>
+                <div class="stat-label">App Store Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Powerful Rewards Tracking</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Rewards Dashboard</h3>
+                <p>See all your rewards balances in one place with intuitive charts and spending insights.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>Expiration Alerts</h3>
+                <p>Never lose points again with smart notifications before your rewards expire.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Optimization Tips</h3>
+                <p>Get personalized recommendations to maximize rewards on every purchase.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3>Auto-Sync</h3>
+                <p>Connect your accounts for automatic rewards tracking across all your cards.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Redemption Finder</h3>
+                <p>Discover the best ways to redeem your points for maximum value.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Bank-Level Security</h3>
+                <p>Your financial data is protected with enterprise-grade encryption.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <h2 class="section-title">App Screenshots</h2>
+        <div class="screenshots-container">
+            <img src="https://placehold.co/250x500/8E44AD/FFFFFF?text=Dashboard" alt="Rewards Dashboard" class="screenshot">
+            <img src="https://placehold.co/250x500/3498DB/FFFFFF?text=Card+View" alt="Card Details" class="screenshot">
+            <img src="https://placehold.co/250x500/2ECC71/FFFFFF?text=Spending+Tips" alt="Spending Tips" class="screenshot">
+            <img src="https://placehold.co/250x500/FF9500/FFFFFF?text=Redemption" alt="Redemption Options" class="screenshot">
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Users Say</h2>
+        <div class="testimonials-container">
+            <div class="testimonial">
+                <p class="testimonial-text">"RewardWallet helped me discover $500 in expiring points I didn't know I had. The app paid for itself in the first week!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JS</div>
+                    <div>
+                        <h4>Jennifer Smith</h4>
+                        <p>Frequent Traveler</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"As someone with 7 different rewards cards, this app has been a game-changer. I'm earning 30% more rewards by using the optimization tips."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div>
+                        <h4>Michael Rodriguez</h4>
+                        <p>Small Business Owner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"The automatic tracking saves me hours each month. I've redeemed over 200,000 points for two free flights thanks to RewardWallet."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SC</div>
+                    <div>
+                        <h4>Sarah Chen</h4>
+                        <p>Marketing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="download" id="download">
+        <h2>Start Maximizing Your Rewards Today</h2>
+        <p>Join thousands of savvy users who are getting more value from their credit card rewards.</p>
+        <div class="download-buttons">
+            <a href="#" class="app-store-btn">
+                <i class="fab fa-apple"></i>
+                <div>
+                    <div style="font-size: 0.8rem;">Download on the</div>
+                    <div>App Store</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Support</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 RewardWallet. All rights reserved.</p>
+            <p>Apple and the Apple logo are trademarks of Apple Inc.</p>
+            <p>RewardWallet is not affiliated with any credit card issuers.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            }
+        });
+
+        // Download button click handler
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            document.getElementById('download').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Animate stats counter
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString() + (element.classList.contains('stat-number') ? '+' : '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Start counter animation when stats section is in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = document.querySelectorAll('.stat-number');
+                    const targets = [1200000, 4700000, 250000, 4.9];
+                    
+                    statNumbers.forEach((stat, index) => {
+                        animateCounter(stat, targets[index], 2000);
+                    });
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.stats'));
+    </script>
+</body>
+</html>

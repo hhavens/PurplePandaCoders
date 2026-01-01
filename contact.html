@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Purple Panda Coders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <div class="logo-icon">🐼</div>
+                        <h1>Purple Panda Coders</h1>
+                    </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Me</a></li>
+                        <li><a href="cardrewardsguru.html">CardRewardsGuru</a></li>
+                        <li><a href="projects.html">My Projects</a></li>
+                        <li><a href="technologies.html">Technologies</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <p>I'm always happy to chat about coding, share project ideas, or collaborate on fun side projects!</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Let's Connect</h2>
+                    <p>Whether you have questions about my projects, want to share coding ideas, or just want to say hello, feel free to reach out!</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>coder@purplepandacoders.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-globe"></i></div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>Based in Digital Space</p>
+                            <p>Available for remote conversations and collaboration</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h3>Response Time</h3>
+                            <p>I typically respond within 24-48 hours</p>
+                            <p>Please note: Coding is my hobby, not my full-time job</p>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 40px;">Connect on Social</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Send Me a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email *</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" class="form-control">
+                                <option value="">Select a topic</option>
+                                <option value="project">Project Discussion</option>
+                                <option value="collaboration">Collaboration Idea</option>
+                                <option value="question">Technical Question</option>
+                                <option value="feedback">Website Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project">Project (Optional)</label>
+                            <select id="project" class="form-control">
+                                <option value="">Not specific to a project</option>
+                                <option value="cardrewardsguru">CardRewardsGuru</option>
+                                <option value="ios">iOS Apps</option>
+                                <option value="web">Web Projects</option>
+                                <option value="powershell">PowerShell Scripts</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message *</label>
+                            <textarea id="message" class="form-control" placeholder="Share your thoughts, project ideas, or just say hello!" rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div style="margin-top: 60px; background-color: var(--light); padding: 40px; border-radius: 10px;">
+                <h2 style="text-align: center; margin-bottom: 30px; color: var(--primary);">What I Love to Discuss</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--swift); margin-bottom: 15px;"><i class="fa-brands fa-swift"></i></div>
+                        <h3>Swift & iOS Development</h3>
+                        <p>Tips, challenges, and cool SwiftUI techniques</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--html); margin-bottom: 15px;"><i class="fa-solid fa-code"></i></div>
+                        <h3>Web Projects</h3>
+                        <p>Creative web design ideas and JavaScript solutions</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--powershell); margin-bottom: 15px;"><i class="fa-solid fa-terminal"></i></div>
+                        <h3>Automation Ideas</h3>
+                        <p>PowerShell scripts and workflow automation</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--rewards); margin-bottom: 15px;"><i class="fas fa-credit-card"></i></div>
+                        <h3>CardRewardsGuru</h3>
+                        <p>Credit card optimization and reward strategies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Purple Panda Coders</div>
+                    <p>A personal coding journey - just for the love of creating!</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Me</a></li>
+                        <li><a href="cardrewardsguru.html">CardRewardsGuru</a></li>
+                        <li><a href="projects.html">My Projects</a></li>
+                        <li><a href="technologies.html">Technologies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="contact.html">Send Message</a></li>
+                        <li><a href="contact.html#social">Social Links</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Purple Panda Coders - Personal Hobby Portfolio</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
