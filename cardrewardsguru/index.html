@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CardRewards - Credit Card Rewards | Apple Store</title>
+    <title>CardRewards - Credit Card Rewards Tracker | Apple Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -378,8 +378,8 @@
                 <li><a href="#screenshots">Screenshots</a></li>
                 <li><a href="#testimonials">Reviews</a></li>
                 <li><a href="#download">Download</a></li>
-                <li><a href="guide.html">Guide</a></li>
-                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="./guide.html">Guide</a></li>
+                <li><a href="./faq.html">FAQ</a></li>
             </ul>
         </nav>
         <button class="download-btn">Get the App</button>
@@ -394,20 +394,20 @@
     </section>
 
     <section class="stats">
-        <div class="stats-container">
-            <!--<div class="stat-item">
+        <!--<div class="stats-container">
+            <div class="stat-item">
                 <div class="stat-number">1.2M+</div>
                 <div class="stat-label">Points Tracked</div>
-            </div>-->
-            <!--<div class="stat-item">
+            </div>
+            <div class="stat-item">
                 <div class="stat-number">$4.7M+</div>
                 <div class="stat-label">Rewards Redeemed</div>
-            </div>-->
-            <!--<div class="stat-item">
+            </div>
+            <div class="stat-item">
                 <div class="stat-number">250K+</div>
                 <div class="stat-label">Active Users</div>
-            </div>-->
-            <!--<div class="stat-item">
+            </div>
+            <div class="stat-item">
                 <div class="stat-number">4.9</div>
                 <div class="stat-label">App Store Rating</div>
             </div>-->
@@ -419,27 +419,26 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
-                    <!--<i class="fas fa-chart-line"></i>-->
-                    <i class="fas fa-wallet"></i>
+                    <i class="fas fa-credit-card"></i>
                 </div>
-                <h3>Rewards Dashboard</h3>
-                <p>See all your rewards balances in one place with intuitive charts and spending insights.</p>
+                <h3>Credit card list</h3>
+                <p>See all your credit cards and rewards multipliers in one place.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-bell"></i>
                 </div>
-                <h3>Expiration Alerts</h3>
-                <p>Never lose points again with smart notifications before your rewards expire.</p>
+                <h3>Renewal Alerts</h3>
+                <p>Get notified when your credit card annual fees are due.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-lightbulb"></i>
                 </div>
                 <h3>Optimization Tips</h3>
-                <p>Get personalized recommendations to maximize rewards on every purchase.</p>
+                <p>Get recommendations based on your location to maximize rewards on every purchase.</p>
             </div>
-            <div class="feature-card">
+            <!--<div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-sync-alt"></i>
                 </div>
@@ -459,17 +458,17 @@
                 </div>
                 <h3>Bank-Level Security</h3>
                 <p>Your financial data is protected with enterprise-grade encryption.</p>
-            </div>
+            </div>-->
         </div>
     </section>
 
     <section class="screenshots" id="screenshots">
         <h2 class="section-title">App Screenshots</h2>
         <div class="screenshots-container">
-            <img src="https://placehold.co/250x500/8E44AD/FFFFFF?text=Dashboard" alt="Rewards Dashboard" class="screenshot">
-            <img src="https://placehold.co/250x500/3498DB/FFFFFF?text=Card+View" alt="Card Details" class="screenshot">
-            <img src="https://placehold.co/250x500/2ECC71/FFFFFF?text=Spending+Tips" alt="Spending Tips" class="screenshot">
-            <img src="https://placehold.co/250x500/FF9500/FFFFFF?text=Redemption" alt="Redemption Options" class="screenshot">
+            <img src="images/cardlist.png" alt="Card List" class="screenshot">
+            <img src="images/cardview.png" alt="Card Details" class="screenshot">
+            <img src="images/spendingtips.png" alt="Spending Tips" class="screenshot">
+            <img src="images/redemption.png" alt="Redemption Options" class="screenshot">
         </div>
     </section>
 
@@ -525,11 +524,11 @@
 
     <footer>
         <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="license.html">License</a>
-            <a href="guide.html">Guide</a>
-            <a href="faq.html">FAQ</a>
-            <a href="readme.html">README</a>
+            <a href="./privacy.html">Privacy Policy</a>
+            <a href="./license.html">License</a>
+            <a href="./guide.html">Guide</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="./readme.html">README</a>
             <a href="mailto:support@example.com">Contact Us</a>
         </div>
         <div class="copyright">
@@ -543,11 +542,15 @@
         // Smooth scrolling for navigation links
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                // Only prevent default for anchor links within the same page
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // For external links (like guide.html, faq.html), let them work normally
             });
         });
 
