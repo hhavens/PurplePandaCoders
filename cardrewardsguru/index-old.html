@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Cards – Home</title>
+  <meta name="description" content="My Cards app website: overview, guide, privacy policy, and license.">
+  <style>
+    :root { --bg: #0f172a; --card: #111827; --text: #e5e7eb; --muted:#9ca3af; --accent:#3b82f6; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: linear-gradient(180deg, #0b1220, #0f172a 30%, #0b1220); color: var(--text); }
+    header { padding: 24px 20px; border-bottom: 1px solid #1f2937; position: sticky; top: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    nav a { color: var(--text); text-decoration: none; margin-right: 16px; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    .hero { padding: 56px 0; display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .title { font-size: clamp(28px, 6vw, 48px); line-height: 1.1; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); font-size: clamp(16px, 2.5vw, 20px); max-width: 60ch; }
+    .cta { margin-top: 20px; display: inline-block; background: var(--accent); color: white; padding: 12px 16px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 32px; }
+    .card { background: #0b1220; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; }
+    h2 { margin-top: 0; }
+    footer { margin-top: 56px; padding: 24px 0; border-top: 1px solid #1f2937; color: var(--muted); }
+    code, pre { background: #0b1220; border: 1px solid #1f2937; border-radius: 8px; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="license.html">License</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1 class="title">My Cards</h1>
+        <p class="subtitle">Track your credit cards, rewards, and renewal dates. Scan or enter cards manually, manage annual fees, and get renewal highlights.</p>
+        <a class="cta" href="guide.html">Read the Guide</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Key Features</h2>
+        <ul>
+          <li>Add cards by camera scan or manual entry</li>
+          <li>View card details and best reward categories</li>
+          <li>Highlight upcoming renewals</li>
+          <li>Swipe to edit or delete cards</li>
+          <li>Optional premium subscription for more cards</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Open Source</h2>
+        <p>This project is open source. See the <a href="license.html">license</a> for terms.</p>
+      </div>
+      <div class="card">
+        <h2>Privacy First</h2>
+        <p>We store your data on-device by default. See our <a href="privacy.html">privacy policy</a> for details.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> My Cards. All rights reserved.</small>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
