@@ -1,75 +1,438 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Cards – License</title>
-  <meta name="description" content="License for the My Cards app.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License - Card Rewards Guru</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root { --bg: #0f172a; --card: #111827; --text: #e5e7eb; --muted:#9ca3af; --accent:#3b82f6; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: linear-gradient(180deg, #0b1220, #0f172a 30%, #0b1220); color: var(--text); }
-    header { padding: 24px 20px; border-bottom: 1px solid #1f2937; position: sticky; top: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
-    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
-    nav a { color: var(--text); text-decoration: none; margin-right: 16px; font-weight: 600; }
-    nav a:hover { color: var(--accent); }
-    main { padding: 32px 0; }
-    h1, h2, h3 { line-height: 1.2; }
-    h1 { font-size: clamp(28px, 5vw, 40px); }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #0b1220; border: 1px solid #1f2937; border-radius: 12px; padding: 16px; }
-    .muted { color: var(--muted); }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    :root {
+      --primary: #8E44AD;
+      --secondary: #3498DB;
+      --accent: #2ECC71;
+      --dark: #2C3E50;
+      --light: #F8F9FA;
+      --gray: #95A5A6;
+      --white: #FFFFFF;
+      --card-bg: #FFFFFF;
+      --text: #2C3E50;
+      --muted: #7F8C8D;
+      --border: #E0E0E0;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+      color: var(--primary);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    nav a.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .download-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .download-btn:hover {
+      background-color: #7D3C98;
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    main {
+      padding: 2rem 0;
+    }
+
+    h1, h2, h3 {
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      color: var(--primary);
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    ul, ol {
+      margin: 1rem 0 1.5rem 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.8rem;
+    }
+
+    .section {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .license-badge {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      margin: 1rem 0;
+    }
+
+    code {
+      background-color: var(--dark);
+      color: var(--white);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+    }
+
+    pre {
+      background-color: var(--dark);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: var(--gray);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .copyright {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .important {
+      background-color: #F0E6F5;
+      border-left: 4px solid var(--primary);
+      padding: 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .container {
+        padding: 1rem;
+      }
+      
+      .section {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="container">
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="guide.html">Guide</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="license.html">License</a>
-      </nav>
-    </div>
+    <a href="index.html" class="logo">
+      <i class="fas fa-credit-card"></i>
+      Card Rewards Guru
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guide.html">Guide</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="license.html" class="active">License</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+    <a href="index.html#download" class="download-btn">Get the App</a>
   </header>
 
-  <main class="container">
-    <h1>License</h1>
-    <p class="muted">Default license: MIT. Replace with your preferred license if needed.</p>
-
-    <pre>
-MIT License
-
-Copyright (c) <span id="year"></span> My Cards
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </pre>
-  </main>
+  <div class="container">
+    <main>
+      <h1>Software License Agreement</h1>
+      <p class="muted">Effective Date: <span id="currentDate"></span></p>
+      
+      <div class="license-badge">MIT License</div>
+      
+      <div class="section">
+        <h2>1. License Grant</h2>
+        <p>Subject to the terms and conditions of this Agreement, Card Rewards Guru grants you a limited, non-exclusive, non-transferable, revocable license to:</p>
+        <ul>
+          <li>Use the Card Rewards Guru application for personal, non-commercial purposes</li>
+          <li>Install the application on devices you own or control</li>
+          <li>Receive updates and support as described in this agreement</li>
+        </ul>
+      </div>
+      
+      <div class="section">
+        <h2>2. Restrictions</h2>
+        <p>You may not:</p>
+        <ul>
+          <li>Reverse engineer, decompile, or disassemble the application</li>
+          <li>Modify, adapt, or create derivative works based on the application</li>
+          <li>Remove any proprietary notices or labels</li>
+          <li>Use the application for any illegal purpose</li>
+          <li>Distribute copies of the application without authorization</li>
+          <li>Use the application to develop a competing product</li>
+        </ul>
+      </div>
+      
+      <div class="section">
+        <h2>3. Open Source Components</h2>
+        <p>Card Rewards Guru includes the following open source components:</p>
+        <ul>
+          <li><strong>React Native</strong> - MIT License</li>
+          <li><strong>Redux</strong> - MIT License</li>
+          <li><strong>Firebase</strong> - Apache License 2.0</li>
+          <li><strong>React Navigation</strong> - MIT License</li>
+        </ul>
+        
+        <div class="important">
+          <p><strong>Source Code:</strong> The source code for Card Rewards Guru is available at <a href="https://github.com/yourusername/card-rewards-guru" target="_blank">GitHub</a> under the MIT License.</p>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>4. Subscription Terms</h2>
+        <p>Card Rewards Guru offers both free and premium subscription plans:</p>
+        <h3>Free Tier</h3>
+        <ul>
+          <li>Track up to 3 credit cards</li>
+          <li>Basic rewards tracking</li>
+          <li>Limited notification features</li>
+        </ul>
+        
+        <h3>Premium Tier</h3>
+        <ul>
+          <li>Unlimited credit card tracking</li>
+          <li>Advanced analytics and insights</li>
+          <li>Priority support</li>
+          <li>No advertisements</li>
+        </ul>
+        
+        <p>Subscriptions automatically renew unless canceled at least 24 hours before the end of the current period.</p>
+      </div>
+      
+      <div class="section">
+        <h2>5. Copyright and Trademarks</h2>
+        <p>All content, features, and functionality of Card Rewards Guru are owned by Card Rewards Guru and are protected by international copyright, trademark, and other intellectual property laws.</p>
+        
+        <p>Apple, the Apple logo, iPhone, and iPad are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.</p>
+      </div>
+      
+      <div class="section">
+        <h2>6. Disclaimer of Warranty</h2>
+        <p>THE APPLICATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.</p>
+        
+        <p>Card Rewards Guru does not guarantee that:</p>
+        <ul>
+          <li>The application will meet your requirements</li>
+          <li>The application will be uninterrupted or error-free</li>
+          <li>The results obtained from using the application will be accurate or reliable</li>
+        </ul>
+      </div>
+      
+      <div class="section">
+        <h2>7. Limitation of Liability</h2>
+        <p>IN NO EVENT SHALL CARD REWARDS GURU BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER ARISING OUT OF OR IN CONNECTION WITH YOUR USE OR INABILITY TO USE THE APPLICATION.</p>
+        
+        <p>Card Rewards Guru is not responsible for:</p>
+        <ul>
+          <li>Financial decisions made based on app recommendations</li>
+          <li>Credit card rewards program changes</li>
+          <li>Data loss due to device failure or user error</li>
+        </ul>
+      </div>
+      
+      <div class="section">
+        <h2>8. Termination</h2>
+        <p>This license is effective until terminated. Your rights under this license will terminate automatically without notice if you fail to comply with any term of this agreement.</p>
+      </div>
+      
+      <div class="section">
+        <h2>9. Governing Law</h2>
+        <p>This agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions.</p>
+        
+        <div class="important">
+          <p><strong>Contact Information:</strong> For questions about this license agreement, please contact us at <a href="mailto:legal@example.com">legal@example.com</a>.</p>
+        </div>
+      </div>
+    </main>
+  </div>
 
   <footer>
-    <div class="container">
-      <small>© <span id="footYear"></span> My Cards. All rights reserved.</small>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="license.html">License</a>
+        <a href="faq.html">FAQ</a>
+        <a href="readme.html">README</a>
+        <a href="mailto:support@example.com">Contact</a>
+      </div>
+      <div class="copyright">
+        <p>&copy; <span id="currentYear"></span> Card Rewards Guru. All rights reserved.</p>
+        <p>Apple and the Apple logo are trademarks of Apple Inc.</p>
+        <p>Card Rewards Guru is not affiliated with any credit card issuers.</p>
+      </div>
     </div>
   </footer>
+
   <script>
-    const y = new Date().getFullYear();
-    document.getElementById('year').textContent = y;
-    document.getElementById('footYear').textContent = y;
+    // Set current date and year
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US', options);
+    document.getElementById('currentYear').textContent = currentDate.getFullYear();
+    
+    // Header background change on scroll
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+      } else {
+        header.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+      }
+    });
   </script>
 </body>
 </html>

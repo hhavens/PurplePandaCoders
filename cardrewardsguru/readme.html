@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README - Card Rewards Guru</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    :root {
+      --primary: #8E44AD;
+      --secondary: #3498DB;
+      --accent: #2ECC71;
+      --dark: #2C3E50;
+      --light: #F8F9FA;
+      --gray: #95A5A6;
+      --white: #FFFFFF;
+      --card-bg: #FFFFFF;
+      --text: #2C3E50;
+      --muted: #7F8C8D;
+      --border: #E0E0E0;
+      --code-bg: #1E1E1E;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+      color: var(--primary);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    nav a.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .download-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .download-btn:hover {
+      background-color: #7D3C98;
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    main {
+      padding: 2rem 0;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      color: var(--primary);
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      color: var(--secondary);
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    ul, ol {
+      margin: 1rem 0 1.5rem 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.8rem;
+    }
+
+    .section {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .badge-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .badge-accent {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .badge-dark {
+      background-color: var(--dark);
+      color: white;
+    }
+
+    .badge-light {
+      background-color: var(--light);
+      color: var(--dark);
+      border: 1px solid var(--border);
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .link-card {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .link-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .link-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .tech-item {
+      display: flex;
+      align-items: center;
+      background-color: var(--light);
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      gap: 0.8rem;
+    }
+
+    .tech-icon {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    pre {
+      background-color: var(--code-bg);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    code {
+      background-color: var(--code-bg);
+      color: #4EC9B0;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+    }
+
+    .code-comment {
+      color: #6A9955;
+    }
+
+    .code-keyword {
+      color: #569CD6;
+    }
+
+    .code-string {
+      color: #CE9178;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background-color: var(--light);
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: var(--light);
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: var(--gray);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .copyright {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .container {
+        padding: 1rem;
+      }
+      
+      .section {
+        padding: 1.5rem;
+      }
+      
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fas fa-credit-card"></i>
+      Card Rewards Guru
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guide.html">Guide</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="license.html">License</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="readme.html" class="active">README</a></li>
+      </ul>
+    </nav>
+    <a href="index.html#download" class="download-btn">Get the App</a>
+  </header>
+
+  <div class="container">
+    <main>
+      <h1>Card Rewards Guru</h1>
+      <p class="muted">Maximize your credit card rewards with intelligent tracking and optimization.</p>
+      
+      <div class="tech-stack">
+        <span class="badge badge-primary">iOS</span>
+        <span class="badge badge-secondary">React Native</span>
+        <span class="badge badge-accent">Firebase</span>
+        <span class="badge badge-dark">TypeScript</span>
+        <span class="badge badge-light">Redux</span>
+      </div>
+      
+      <div class="section">
+        <h2>📱 Quick Links</h2>
+        <div class="link-grid">
+          <a href="index.html" class="link-card">
+            <div class="link-icon"><i class="fas fa-home"></i></div>
+            <h4>Home</h4>
+            <p>App homepage</p>
+          </a>
+          <a href="guide.html" class="link-card">
+            <div class="link-icon"><i class="fas fa-book"></i></div>
+            <h4>User Guide</h4>
+            <p>Complete app guide</p>
+          </a>
+          <a href="privacy.html" class="link-card">
+            <div class="link-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Privacy Policy</h4>
+            <p>Data protection info</p>
+          </a>
+          <a href="license.html" class="link-card">
+            <div class="link-icon"><i class="fas fa-file-contract"></i></div>
+            <h4>License</h4>
+            <p>MIT License terms</p>
+          </a>
+          <a href="faq.html" class="link-card">
+            <div class="link-icon"><i class="fas fa-question-circle"></i></div>
+            <h4>FAQ</h4>
+            <p>Common questions</p>
+          </a>
+          <a href="https://github.com/yourusername/card-rewards-guru" target="_blank" class="link-card">
+            <div class="link-icon"><i class="fab fa-github"></i></div>
+            <h4>GitHub</h4>
+            <p>Source code</p>
+          </a>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>🚀 Features</h2>
+        <ul>
+          <li><strong>Multi-Card Management:</strong> Track all your credit cards in one place</li>
+          <li><strong>Rewards Optimization:</strong> Get personalized card recommendations</li>
+          <li><strong>Renewal Alerts:</strong> Never miss annual fee payments</li>
+          <li><strong>Expiration Tracking:</strong> Monitor points and miles expiration</li>
+          <li><strong>Secure Storage:</strong> Bank-level encryption for your data</li>
+          <li><strong>Cross-Device Sync:</strong> Access your data anywhere</li>
+        </ul>
+      </div>
+      
+      <div class="section">
+        <h2>⚙️ Installation</h2>
+        <h3>For Users</h3>
+        <ol>
+          <li>Open the App Store on your iOS device</li>
+          <li>Search for "Card Rewards Guru"</li>
+          <li>Tap "Get" to download and install</li>
+          <li>Open the app and create an account</li>
+          <li>Start adding your credit cards</li>
+        </ol>
+        
+        <h3>For Developers</h3>
+        <pre><code><span class="code-comment"># Clone the repository</span>
+git clone https://github.com/yourusername/card-rewards-guru.git
+cd card-rewards-guru
+
+<span class="code-comment"># Install dependencies</span>
+npm install
+
+<span class="code-comment"># Install iOS dependencies</span>
+cd ios && pod install
+
+<span class="code-comment"># Run on iOS simulator</span>
+npm run ios
+
+<span class="code-comment"># Run on Android emulator</span>
+npm run android</code></pre>
+      </div>
+      
+      <div class="section">
+        <h2>📊 Project Structure</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Directory</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>/src/components</code></td>
+                <td>Reusable UI components</td>
+              </tr>
+              <tr>
+                <td><code>/src/screens</code></td>
+                <td>App screens and pages</td>
+              </tr>
+              <tr>
+                <td><code>/src/navigation</code></td>
+                <td>Navigation configuration</td>
+              </tr>
+              <tr>
+                <td><code>/src/store</code></td>
+                <td>Redux store and slices</td>
+              </tr>
+              <tr>
+                <td><code>/src/services</code></td>
+                <td>API services and utilities</td>
+              </tr>
+              <tr>
+                <td><code>/src/assets</code></td>
+                <td>Images, fonts, and other assets</td>
+              </tr>
+              <tr>
+                <td><code>/ios</code></td>
+                <td>iOS native code</td>
+              </tr>
+              <tr>
+                <td><code>/android</code></td>
+                <td>Android native code</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>🤝 Contributing</h2>
+        <p>We welcome contributions! Here's how you can help:</p>
+        
+        <h3>Reporting Bugs</h3>
+        <ol>
+          <li>Check if the bug has already been reported</li>
+          <li>Create a new issue with a descriptive title</li>
+          <li>Include steps to reproduce the bug</li>
+          <li>Add screenshots if applicable</li>
+          <li>Specify your device and OS version</li>
+        </ol>
+        
+        <h3>Feature Requests</h3>
+        <p>Suggest new features in the GitHub issues section. Include:</p>
+        <ul>
+          <li>Detailed description of the feature</li>
+          <li>Use cases and benefits</li>
+          <li>Potential implementation approach</li>
+        </ul>
+        
+        <h3>Pull Requests</h3>
+        <ol>
+          <li>Fork the repository</li>
+          <li>Create a new branch for your feature</li>
+          <li>Write clear commit messages</li>
+          <li>Add tests for new functionality</li>
+          <li>Submit a pull request with description</li>
+        </ol>
+      </div>
+      
+      <div class="section">
+        <h2>📄 License</h2>
+        <p>Card Rewards Guru is released under the MIT License. See the <a href="license.html">License page</a> for full details.</p>
+        
+        <pre><code><span class="code-comment">MIT License</span>
+
+<span class="code-comment">Copyright (c) 2023 Card Rewards Guru</span>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</code></pre>
+      </div>
+      
+      <div class="section">
+        <h2>📧 Contact & Support</h2>
+        <div class="link-grid">
+          <a href="mailto:support@example.com" class="link-card">
+            <div class="link-icon"><i class="fas fa-envelope"></i></div>
+            <h4>Email Support</h4>
+            <p>support@example.com</p>
+          </a>
+          <a href="https://github.com/yourusername/card-rewards-guru/issues" target="_blank" class="link-card">
+            <div class="link-icon"><i class="fab fa-github"></i></div>
+            <h4>GitHub Issues</h4>
+            <p>Report bugs & features</p>
+          </a>
+          <a href="https://twitter.com/cardrewardsguru" target="_blank" class="link-card">
+            <div class="link-icon"><i class="fab fa-twitter"></i></div>
+            <h4>Twitter</h4>
+            <p>@cardrewardsguru</p>
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="license.html">License</a>
+        <a href="faq.html">FAQ</a>
+        <a href="readme.html">README</a>
+        <a href="mailto:support@example.com">Contact</a>
+      </div>
+      <div class="copyright">
+        <p>&copy; <span id="currentYear"></span> Card Rewards Guru. All rights reserved.</p>
+        <p>Apple and the Apple logo are trademarks of Apple Inc.</p>
+        <p>Card Rewards Guru is not affiliated with any credit card issuers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Header background change on scroll
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+      } else {
+        header.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+      }
+    });
+    
+    // Syntax highlighting for code blocks
+    document.querySelectorAll('code').forEach(code => {
+      const html = code.innerHTML;
+      // Simple syntax highlighting (you might want to use a library like Prism.js for production)
+      code.innerHTML = html
+        .replace(/\/\/.*$/gm, '<span class="code-comment">$&</span>')
+        .replace(/"(.*?)"/g, '<span class="code-string">"$1"</span>')
+        .replace(/\b(const|let|var|function|return|import|from|export|default)\b/g, '<span class="code-keyword">$1</span>');
+    });
+  </script>
+</body>
+</html>

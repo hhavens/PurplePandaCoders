@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Cards – Privacy Policy</title>
+  <meta name="description" content="Privacy policy for the My Cards app.">
+  <style>
+    :root { --bg: #0f172a; --card: #111827; --text: #e5e7eb; --muted:#9ca3af; --accent:#3b82f6; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: linear-gradient(180deg, #0b1220, #0f172a 30%, #0b1220); color: var(--text); }
+    header { padding: 24px 20px; border-bottom: 1px solid #1f2937; position: sticky; top: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+    nav a { color: var(--text); text-decoration: none; margin-right: 16px; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    main { padding: 32px 0; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { font-size: clamp(28px, 5vw, 40px); }
+    h2 { margin-top: 28px; font-size: 22px; }
+    p { color: var(--text); }
+    .muted { color: var(--muted); }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="license.html">License</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Privacy Policy</h1>
+    <p class="muted">Last updated: <span id="date"></span></p>
+
+    <p>This Privacy Policy describes how the My Cards app ("the App", "we", "us") handles your information.</p>
+
+    <h2>Data We Collect</h2>
+    <ul>
+      <li><strong>On-device card data</strong>: Card names, types, last four digits, rewards, annual fee, and renewal information you enter or scan.</li>
+      <li><strong>Subscription status</strong>: Whether you have a premium subscription, stored locally and/or retrieved via App Store mechanisms.</li>
+    </ul>
+
+    <h2>How We Use Data</h2>
+    <ul>
+      <li>To display and manage your cards within the App.</li>
+      <li>To determine eligibility for features (e.g., card limits for free vs premium).</li>
+      <li>To highlight upcoming renewals.</li>
+    </ul>
+
+    <h2>Data Storage</h2>
+    <p>All card data is stored on your device. We do not transmit your card data to our servers. If you enable platform services (e.g., iCloud backup), your data may be backed up according to your system settings.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>The App may use Apple services such as StoreKit for subscriptions and system frameworks for camera scanning. These services are subject to Apple's terms and privacy policies.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>The App is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+    <h2>Your Choices</h2>
+    <ul>
+      <li>You can delete cards at any time within the App.</li>
+      <li>You can opt not to upgrade to premium; the App remains usable with free limits.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy? Contact <a href="mailto:privacy@example.com">privacy@example.com</a>.</p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> My Cards. All rights reserved.</small>
+    </div>
+  </footer>
+  <script>
+    const d = new Date();
+    document.getElementById('year').textContent = d.getFullYear();
+    document.getElementById('date').textContent = d.toLocaleDateString();
+  </script>
+</body>
+</html>
