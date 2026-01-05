@@ -190,6 +190,14 @@
       margin: 1rem 0;
     }
 
+    .highlight {
+      background-color: #F0E6F5;
+      border-left: 4px solid var(--primary);
+      padding: 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
     footer {
       background-color: var(--dark);
       color: var(--gray);
@@ -213,18 +221,24 @@
     }
 
     .footer-links a {
-      color: var(--gray);
+      color: #CFD8DC;
       text-decoration: none;
       transition: color 0.3s;
     }
-
+    
     .footer-links a:hover {
       color: var(--white);
     }
 
     .copyright {
       font-size: 0.9rem;
-      color: var(--muted);
+      color: #B0BEC5;
+      line-height: 1.6;
+    }
+    
+    .copyright p {
+      margin-bottom: 0.5rem;
+      color: #B0BEC5;
     }
 
     .step {
@@ -337,6 +351,10 @@
             </li>
             <li>If you reach the free limit, you'll be prompted to upgrade to add more cards.</li>
           </ol>
+
+          <div class="highlight">
+            <strong>Note:</strong> Templates have preconfigured rewards and annual rates. You can customize these after adding the card.
+          </div>
         </div>
 
         <div class="step">
@@ -345,6 +363,16 @@
             <li>Tap any card in the list to view details or edit it.</li>
             <li>Swipe left slowly (as to not accidentally delete) on a card to quickly <em>Edit</em> or <em>Delete</em>.</li>
             <li>Cards nearing renewal are highlighted and may show a <em>Renewal soon</em> badge.</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="step">
+          <h3><span class="step-number">3</span> Viewing Recommendations</h3>
+          <ul>
+            <li>Select the Recommendations tab.</li>
+            <li>View the card recommendation for the location you are currently at.</li>
+            <li>Scroll to bottom to search for a recommendation. <em>Used for websites, such as travel, where the app cannot pick up your location.</em></li>
           </ul>
         </div>
       </section>
@@ -411,7 +439,7 @@
     </main>
   </div>
 
-  <footer>
+    <footer>
     <div class="footer-content">
       <div class="footer-links">
         <a href="index.html">Home</a>
@@ -419,8 +447,7 @@
         <a href="privacy.html">Privacy Policy</a>
         <a href="license.html">License</a>
         <a href="faq.html">FAQ</a>
-        <a href="readme.html">README</a>
-        <a href="mailto:support@example.com">Contact</a>
+        <a href="mailto:support@purplepandacoders.com?subject=Card%20Rewards%20Guru">Contact</a>
       </div>
       <div class="copyright">
         <p>&copy; <span id="currentYear"></span> Card Rewards Guru. All rights reserved.</p>
