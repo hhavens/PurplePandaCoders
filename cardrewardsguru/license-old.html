@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Cards – License</title>
+  <meta name="description" content="License for the My Cards app.">
+  <style>
+    :root { --bg: #0f172a; --card: #111827; --text: #e5e7eb; --muted:#9ca3af; --accent:#3b82f6; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: linear-gradient(180deg, #0b1220, #0f172a 30%, #0b1220); color: var(--text); }
+    header { padding: 24px 20px; border-bottom: 1px solid #1f2937; position: sticky; top: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+    nav a { color: var(--text); text-decoration: none; margin-right: 16px; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    main { padding: 32px 0; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { font-size: clamp(28px, 5vw, 40px); }
+    pre { white-space: pre-wrap; word-wrap: break-word; background: #0b1220; border: 1px solid #1f2937; border-radius: 12px; padding: 16px; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="license.html">License</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>License</h1>
+    <p class="muted">Default license: MIT. Replace with your preferred license if needed.</p>
+
+    <pre>
+MIT License
+
+Copyright (c) <span id="year"></span> My Cards
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </pre>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="footYear"></span> My Cards. All rights reserved.</small>
+    </div>
+  </footer>
+  <script>
+    const y = new Date().getFullYear();
+    document.getElementById('year').textContent = y;
+    document.getElementById('footYear').textContent = y;
+  </script>
+</body>
+</html>
