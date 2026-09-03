@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicHub Forum | Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #1e293b;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --text: #334155;
+            --text-light: #64748b;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --hover-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .forum-header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-bg);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Navigation */
+        .forum-nav {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .nav-link {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            background: var(--light-bg);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        .forum-content {
+            padding: 30px 0;
+            min-height: 70vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--primary-light);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 18px;
+        }
+
+        .category-info h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+            color: var(--secondary);
+        }
+
+        .category-info p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .latest-activity {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Topics List */
+        .topics-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 35px;
+            border: 1px solid var(--border);
+        }
+
+        .topics-header {
+            background: var(--light-bg);
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .topic-item {
+            display: flex;
+            padding: 22px 25px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .topic-item:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .topic-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            flex-shrink: 0;
+            font-weight: 700;
+            color: white;
+            font-size: 16px;
+        }
+
+        .topic-content {
+            flex: 1;
+        }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .topic-category {
+            background: var(--light-bg);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .topic-stats {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 130px;
+            flex-shrink: 0;
+        }
+
+        .reply-count {
+            background: var(--primary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .last-activity {
+            font-size: 13px;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Auth Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: var(--hover-shadow);
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+            max-width: 350px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .toast-success { border-left-color: var(--success); }
+        .toast-danger { border-left-color: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topic-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .topic-stats {
+                align-items: flex-start;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="authModalTitle">Welcome Back</h2>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+            
+            <div class="error-message" id="authError"></div>
+            
+            <form id="authForm" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group" id="usernameGroup" style="display: none;">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" placeholder="Choose a display name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="email" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="••••••••" required minlength="6">
+                </div>
+                
+                <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="authButtonText">Sign In</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Topic Modal -->
+    <div class="modal-overlay" id="newTopicModal">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Start a New Discussion</h2>
+            </div>
+
+            <div class="error-message" id="newTopicError"></div>
+
+            <form id="newTopicForm" onsubmit="handleNewTopicSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="newTopicTitle" placeholder="What's your topic about?" required maxlength="150">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input" id="newTopicCategory" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-input" id="newTopicContent" rows="6" placeholder="Share the details..." required style="resize: vertical;"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="hideNewTopicModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Topic</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="forum-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">💬</div>
+                    <div class="logo-text">Comic<span>Hub</span></div>
+                </a>
+                
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search discussions...">
+                </div>
+                
+                <div class="user-menu" id="userMenu">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="forum-nav">
+        <div class="container">
+            <div class="nav-links">
+                <a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="nav-link"><i class="fas fa-fire"></i> Trending</a>
+                <a href="#" class="nav-link"><i class="fas fa-users"></i> Members</a>
+                <a href="admin.html" class="nav-link"><i class="fas fa-shield-alt"></i> Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="forum-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Community Forum</h1>
+            </div>
+            
+            <!-- Categories will be loaded here -->
+            <div id="categoriesContainer">
+                <div style="text-align: center; padding: 60px 0;">
+                    <div class="loading" style="width: 40px; height: 40px;"></div>
+                    <p style="margin-top: 20px; color: var(--text-light);">Loading forum...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ============ FIREBASE CONFIGURATION ============
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQGhbrblh7BvoNiBzcj3CZNhDK6aB4psU",
+            authDomain: "comiczone-72095.firebaseapp.com",
+            projectId: "comiczone-72095",
+            storageBucket: "comiczone-72095.firebasestorage.app",
+            messagingSenderId: "380867871740",
+            appId: "1:380867871740:web:22b094a6fa7517b2a4a879"
+        };
+
+        // Initialize Firebase
+        let firebaseApp;
+        let auth;
+        let db;
+        let currentUser = null;
+        let loadedCategories = [];
+
+        function initFirebase() {
+            try {
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+                
+                console.log('Firebase initialized successfully');
+                return true;
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+                showError('Failed to initialize Firebase. Please check your configuration.');
+                return false;
+            }
+        }
+
+        // ============ AUTHENTICATION ============
+        let currentAuthMode = 'login';
+
+        function initAuth() {
+            // Listen for auth state changes
+            auth.onAuthStateChanged(async (user) => {
+                currentUser = user;
+                
+                if (user) {
+                    // User is signed in
+                    await loadUserData(user.uid);
+                    updateUIForLoggedInUser();
+                } else {
+                    // User is signed out
+                    updateUIForLoggedOutUser();
+                }
+                
+                // Load forum data regardless of auth state
+                loadCategories();
+            });
+        }
+
+        async function loadUserData(userId) {
+            try {
+                const userDoc = await db.collection('users').doc(userId).get();
+                if (!userDoc.exists) {
+                    // Create user profile if it doesn't exist
+                    const user = auth.currentUser;
+                    await db.collection('users').doc(userId).set({
+                        username: user.displayName || user.email.split('@')[0],
+                        email: user.email,
+                        avatarColor: getRandomColor(),
+                        role: 'member',
+                        joinDate: new Date().toISOString(),
+                        postCount: 0,
+                        topicCount: 0
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        function updateUIForLoggedInUser() {
+            const userMenu = document.getElementById('userMenu');
+            const user = auth.currentUser;
+            
+            userMenu.innerHTML = `
+                <button class="btn btn-primary" onclick="createNewTopic()">
+                    <i class="fas fa-plus"></i> New Topic
+                </button>
+                <div class="user-avatar" onclick="window.location.href='profile.html'" title="View Profile">
+                    ${user.email?.charAt(0).toUpperCase() || 'U'}
+                </div>
+                <button class="btn btn-outline" onclick="logout()" title="Log out">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            `;
+        }
+
+        function updateUIForLoggedOutUser() {
+            const userMenu = document.getElementById('userMenu');
+            userMenu.innerHTML = `
+                <button class="btn btn-outline" onclick="showAuthModal('login')">
+                    Sign In
+                </button>
+                <button class="btn btn-primary" onclick="showAuthModal('register')">
+                    Sign Up
+                </button>
+            `;
+        }
+
+        // ============ AUTH MODAL ============
+        function showAuthModal(mode = 'login') {
+            currentAuthMode = mode;
+            const modal = document.getElementById('authModal');
+            const title = document.getElementById('authModalTitle');
+            const buttonText = document.getElementById('authButtonText');
+            const usernameGroup = document.getElementById('usernameGroup');
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            
+            // Update tabs
+            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.auth-tab[onclick*="${mode}"]`).classList.add('active');
+            
+            if (mode === 'login') {
+                title.textContent = 'Welcome Back';
+                buttonText.textContent = 'Sign In';
+                usernameGroup.style.display = 'none';
+                confirmPasswordGroup.style.display = 'none';
+            } else {
+                title.textContent = 'Join ComicHub';
+                buttonText.textContent = 'Create Account';
+                usernameGroup.style.display = 'block';
+                confirmPasswordGroup.style.display = 'block';
+            }
+            
+            // Clear form
+            document.getElementById('authForm').reset();
+            hideAuthError();
+            modal.style.display = 'flex';
+        }
+
+        function hideAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function switchAuthTab(mode) {
+            showAuthModal(mode);
+        }
+
+        function showAuthError(message) {
+            const errorDiv = document.getElementById('authError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideAuthError() {
+            document.getElementById('authError').style.display = 'none';
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            try {
+                if (currentAuthMode === 'login') {
+                    // Sign in
+                    await auth.signInWithEmailAndPassword(email, password);
+                    showToast('Signed in successfully!', 'success');
+                    hideAuthModal();
+                } else {
+                    // Register
+                    if (password !== confirmPassword) {
+                        throw new Error('Passwords do not match');
+                    }
+                    if (!username.trim()) {
+                        throw new Error('Please choose a username');
+                    }
+                    
+                    // Create user
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    
+                    // Create user profile
+                    await db.collection('users').doc(userCredential.user.uid).set({
+                        username: username.trim(),
+                        email: email,
+                        avatarColor: getRandomColor(),
+                        role: 'member',
+                        joinDate: new Date().toISOString(),
+                        postCount: 0,
+                        topicCount: 0
+                    });
+                    
+                    showToast('Account created successfully!', 'success');
+                    hideAuthModal();
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                showAuthError(getErrorMessage(error));
+            }
+        }
+
+        function getErrorMessage(error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    return 'This email is already registered.';
+                case 'auth/invalid-email':
+                    return 'Please enter a valid email address.';
+                case 'auth/weak-password':
+                    return 'Password should be at least 6 characters.';
+                case 'auth/user-not-found':
+                    return 'No account found with this email.';
+                case 'auth/wrong-password':
+                    return 'Incorrect password.';
+                default:
+                    return error.message || 'An error occurred. Please try again.';
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // ============ FORUM DATA ============
+        async function loadCategories() {
+            const container = document.getElementById('categoriesContainer');
+            
+            try {
+                // Try to load categories from Firestore
+                const snapshot = await db.collection('categories').get();
+                
+                if (snapshot.empty) {
+                    // Create default categories if none exist
+                    await createDefaultCategories();
+                    return loadCategories(); // Recursively load after creation
+                }
+                
+                let html = '<div class="categories-grid">';
+                loadedCategories = [];
+
+                snapshot.forEach(doc => {
+                    const cat = doc.data();
+                    loadedCategories.push({ id: doc.id, name: cat.name });
+                    html += `
+                        <div class="category-card" onclick="viewCategory('${doc.id}', '${cat.name}')">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-${cat.icon || 'folder'}"></i>
+                                </div>
+                                <div class="category-info">
+                                    <h3>${cat.name}</h3>
+                                    <p>${cat.description}</p>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <span><i class="fas fa-comment-alt"></i> ${cat.topicCount || 0} topics</span>
+                                <span><i class="fas fa-reply"></i> ${cat.postCount || 0} posts</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                
+                // Add recent topics section
+                html += await loadRecentTopics();
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px 0; color: var(--danger);">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3>Error Loading Forum</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadCategories()" style="margin-top: 20px;">
+                            <i class="fas fa-sync-alt"></i> Retry
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        async function createDefaultCategories() {
+            const defaultCategories = [
+                {
+                    name: 'Comic Discussion',
+                    description: 'Talk about webcomics, manga, and graphic novels',
+                    icon: 'comments',
+                    topicCount: 0,
+                    postCount: 0,
+                    order: 1
+                },
+                {
+                    name: 'Feedback & Suggestions',
+                    description: 'Share your ideas and report issues',
+                    icon: 'lightbulb',
+                    topicCount: 0,
+                    postCount: 0,
+                    order: 2
+                },
+                {
+                    name: 'Creative Corner',
+                    description: 'Share your fanart, fanfiction, and creations',
+                    icon: 'palette',
+                    topicCount: 0,
+                    postCount: 0,
+                    order: 3
+                },
+                {
+                    name: 'Off-Topic Lounge',
+                    description: 'General discussions about anything',
+                    icon: 'coffee',
+                    topicCount: 0,
+                    postCount: 0,
+                    order: 4
+                },
+                {
+                    name: 'Help & Support',
+                    description: 'Get technical help and community support',
+                    icon: 'headset',
+                    topicCount: 0,
+                    postCount: 0,
+                    order: 5
+                }
+            ];
+            
+            const batch = db.batch();
+            defaultCategories.forEach((cat, index) => {
+                const catRef = db.collection('categories').doc(cat.name.toLowerCase().replace(/ /g, '-'));
+                batch.set(catRef, cat);
+            });
+            
+            await batch.commit();
+        }
+
+        async function loadRecentTopics() {
+            try {
+                const snapshot = await db.collection('topics')
+                    .orderBy('createdAt', 'desc')
+                    .limit(10)
+                    .get();
+                
+                if (snapshot.empty) {
+                    return `
+                        <div class="page-header" style="margin-top: 40px;">
+                            <h2 class="page-title">Recent Discussions</h2>
+                        </div>
+                        <div style="text-align: center; padding: 40px; color: var(--text-light);">
+                            <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <h3>No topics yet</h3>
+                            <p>Be the first to start a discussion!</p>
+                        </div>
+                    `;
+                }
+                
+                let html = `
+                    <div class="page-header" style="margin-top: 40px;">
+                        <h2 class="page-title">Recent Discussions</h2>
+                    </div>
+                    <div class="topics-list">
+                        <div class="topics-header">
+                            <span>Topic</span>
+                            <span>Replies</span>
+                        </div>
+                `;
+                
+                snapshot.forEach(doc => {
+                    const topic = doc.data();
+                    const timeAgo = formatTimeAgo(topic.createdAt);
+                    
+                    html += `
+                        <div class="topic-item" data-category="${topic.category}" onclick="viewTopic('${doc.id}')">
+                            <div class="topic-avatar" style="background: ${topic.authorAvatarColor || '#3b82f6'}">
+                                ${topic.authorName?.charAt(0) || 'U'}
+                            </div>
+                            <div class="topic-content">
+                                <div class="topic-title">${topic.title}</div>
+                                <div class="topic-meta">
+                                    <span>By ${topic.authorName}</span>
+                                    <span class="topic-category">${topic.category}</span>
+                                    <span>${timeAgo}</span>
+                                </div>
+                            </div>
+                            <div class="topic-stats">
+                                <div class="reply-count">${topic.replyCount || 0}</div>
+                                <div class="last-activity">Last reply: ${timeAgo}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                return html;
+                
+            } catch (error) {
+                console.error('Error loading topics:', error);
+                return '';
+            }
+        }
+
+        function viewCategory(categoryId, categoryName) {
+            filterTopicsByCategory(categoryName);
+        }
+
+        function filterTopicsByCategory(categoryName) {
+            const items = document.querySelectorAll('.topic-item');
+            let visibleCount = 0;
+            items.forEach(item => {
+                const match = item.dataset.category === categoryName;
+                item.style.display = match ? '' : 'none';
+                if (match) visibleCount++;
+            });
+            showCategoryFilterBar(categoryName, visibleCount);
+            const topicsList = document.querySelector('.topics-list');
+            if (topicsList) topicsList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showCategoryFilterBar(categoryName, count) {
+            let bar = document.getElementById('categoryFilterBar');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'categoryFilterBar';
+                bar.style.cssText = 'display:flex; align-items:center; gap:10px; margin:20px 0; padding:12px 16px; background:var(--light-bg); border-radius:8px;';
+                const topicsList = document.querySelector('.topics-list');
+                if (topicsList) topicsList.parentElement.insertBefore(bar, topicsList);
+            }
+            bar.innerHTML = `
+                <span>Showing <strong>${count}</strong> recent topic${count === 1 ? '' : 's'} in <strong>${categoryName}</strong></span>
+                <button class="btn btn-outline" style="padding: 4px 12px; font-size: 13px;" onclick="clearCategoryFilter()">
+                    <i class="fas fa-times"></i> Clear filter
+                </button>
+            `;
+        }
+
+        function clearCategoryFilter() {
+            document.querySelectorAll('.topic-item').forEach(item => item.style.display = '');
+            const bar = document.getElementById('categoryFilterBar');
+            if (bar) bar.remove();
+        }
+
+        function viewTopic(topicId) {
+            window.location.href = `topic.html?id=${topicId}`;
+        }
+
+        function createNewTopic() {
+            if (!currentUser) {
+                showAuthModal('login');
+                return;
+            }
+
+            populateNewTopicCategories();
+            document.getElementById('newTopicForm').reset();
+            hideNewTopicError();
+            document.getElementById('newTopicModal').style.display = 'flex';
+        }
+
+        function hideNewTopicModal() {
+            document.getElementById('newTopicModal').style.display = 'none';
+        }
+
+        function populateNewTopicCategories() {
+            const select = document.getElementById('newTopicCategory');
+            select.innerHTML = loadedCategories
+                .map(cat => `<option value="${cat.name}">${cat.name}</option>`)
+                .join('');
+        }
+
+        function showNewTopicError(message) {
+            const errorDiv = document.getElementById('newTopicError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideNewTopicError() {
+            document.getElementById('newTopicError').style.display = 'none';
+        }
+
+        async function handleNewTopicSubmit(event) {
+            event.preventDefault();
+            hideNewTopicError();
+
+            const title = document.getElementById('newTopicTitle').value.trim();
+            const category = document.getElementById('newTopicCategory').value;
+            const content = document.getElementById('newTopicContent').value.trim();
+
+            if (!title || !category || !content) {
+                showNewTopicError('Please fill out every field.');
+                return;
+            }
+
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const profile = userDoc.exists ? userDoc.data() : {};
+                const authorName = profile.username || currentUser.email.split('@')[0];
+                const authorAvatarColor = profile.avatarColor || getRandomColor();
+                const authorRole = profile.role || 'member';
+                const now = new Date().toISOString();
+
+                const topicRef = await db.collection('topics').add({
+                    title,
+                    category,
+                    authorId: currentUser.uid,
+                    authorName,
+                    authorAvatarColor,
+                    authorRole,
+                    createdAt: now,
+                    lastReplyAt: now,
+                    viewCount: 0,
+                    replyCount: 0,
+                    isLocked: false,
+                    isPinned: false
+                });
+
+                await db.collection('posts').add({
+                    topicId: topicRef.id,
+                    content: content.replace(/\n/g, '<br>'),
+                    authorId: currentUser.uid,
+                    authorName,
+                    authorAvatarColor,
+                    authorRole,
+                    isFirstPost: true,
+                    createdAt: now,
+                    likes: 0,
+                    attachments: []
+                });
+
+                await db.collection('users').doc(currentUser.uid).update({
+                    topicCount: firebase.firestore.FieldValue.increment(1)
+                });
+
+                const categoryMatch = loadedCategories.find(cat => cat.name === category);
+                if (categoryMatch) {
+                    await db.collection('categories').doc(categoryMatch.id).update({
+                        topicCount: firebase.firestore.FieldValue.increment(1)
+                    });
+                }
+
+                hideNewTopicModal();
+                window.location.href = `topic.html?id=${topicRef.id}`;
+            } catch (error) {
+                console.error('Error creating topic:', error);
+                showNewTopicError(error.message || 'Something went wrong posting your topic.');
+            }
+        }
+
+        // ============ UTILITY FUNCTIONS ============
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}" 
+                   style="color: ${type === 'success' ? 'var(--success)' : 'var(--primary)'};">
+                </i>
+                <div>
+                    <div style="font-weight: 500;">${message}</div>
+                    <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">
+                        Just now
+                    </div>
+                </div>
+                <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: var(--text-light); cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+
+        function showError(message) {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px 0; color: var(--danger);">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
+                    <h3>Initialization Error</h3>
+                    <p>${message}</p>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="location.reload()">
+                            <i class="fas fa-sync-alt"></i> Reload Page
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatTimeAgo(timestamp) {
+            if (!timestamp) return 'Just now';
+            
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+            return `${Math.floor(seconds / 86400)}d ago`;
+        }
+
+        async function logout() {
+            try {
+                await auth.signOut();
+                showToast('Logged out successfully', 'success');
+            } catch (error) {
+                console.error('Error logging out:', error);
+                showToast('Error logging out', 'danger');
+            }
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            const authModal = document.getElementById('authModal');
+            if (event.target === authModal) {
+                hideAuthModal();
+            }
+            const newTopicModal = document.getElementById('newTopicModal');
+            if (event.target === newTopicModal) {
+                hideNewTopicModal();
+            }
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            if (initFirebase()) {
+                initAuth();
+            }
+        });
+    </script>
+</body>
+</html>

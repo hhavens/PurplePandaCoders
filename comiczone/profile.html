@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | ComicHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #1e293b;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --text: #334155;
+            --text-light: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .profile-username {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .profile-role {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--light-bg);
+            color: var(--text-light);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .profile-bio {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-bg);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .topic-list-item {
+            display: block;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .topic-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .topic-list-item:hover .topic-list-title {
+            color: var(--primary);
+        }
+
+        .topic-list-title {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .topic-list-meta {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+            max-width: 350px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .toast-success { border-left-color: var(--success); }
+        .toast-danger { border-left-color: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Auth Modal (for logged-out visitors) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="authModalTitle">Welcome Back</h2>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+
+            <div class="error-message" id="authError"></div>
+
+            <form id="authForm" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group" id="usernameGroup" style="display: none;">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" placeholder="Choose a display name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="••••••••" required minlength="6">
+                </div>
+
+                <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="authButtonText">Sign In</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header style="background: white; border-bottom: 1px solid var(--border); padding: 15px 0;">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 10px;
+                     display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">
+                    💬
+                </div>
+                <div style="font-size: 22px; font-weight: 800; color: var(--secondary);">
+                    Comic<span style="color: var(--primary);">Hub</span>
+                </div>
+            </a>
+
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <a href="forum4.html" style="text-decoration: none; color: var(--text); font-weight: 500;">Forum</a>
+                <div id="userSection"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 20px 0;">
+        <div id="profileContent">
+            <div style="text-align: center; padding: 60px 0;">
+                <p style="color: var(--text-light);">Loading profile...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-storage-compat.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initFirebase();
+                initAuth();
+                await loadProfile();
+            } catch (error) {
+                console.error('Startup error:', error);
+                document.getElementById('profileContent').innerHTML = `
+                    <div class="profile-card" style="text-align: center; color: var(--danger);">
+                        <h3>Couldn't load this page</h3>
+                        <p style="margin-top: 10px; color: var(--text-light);">${error.message || error}</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

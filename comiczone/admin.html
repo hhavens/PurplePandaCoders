@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ComicHub Forum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #1e293b;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --text: #334155;
+            --text-light: #64748b;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --hover-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .admin-header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: var(--light-bg);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon.users { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
+        .stat-icon.topics { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .stat-icon.posts { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .stat-icon.online { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--danger); }
+
+        /* Admin Sections */
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Tables */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .admin-table th {
+            background: var(--light-bg);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--secondary);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .admin-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-table tr:hover {
+            background: var(--light-bg);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-admin { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .badge-moderator { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
+        .badge-member { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .badge-banned { background: rgba(100, 116, 139, 0.1); color: var(--text-light); }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-bg);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Status indicators */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-online { background: var(--success); }
+        .status-offline { background: var(--text-light); }
+        .status-away { background: var(--warning); }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: var(--light-bg);
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: var(--hover-shadow);
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+            max-width: 350px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .toast-success { border-left-color: var(--success); }
+        .toast-warning { border-left-color: var(--warning); }
+        .toast-danger { border-left-color: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Search box */
+        .search-box {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .admin-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <div class="logo-text">Comic<span>Hub</span> Admin</div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Forum
+                </a>
+                <a href="admin.html" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link" onclick="showTab('users')">
+                    <i class="fas fa-users"></i> Users
+                </a>
+                <a href="#" class="nav-link" onclick="showTab('content')">
+                    <i class="fas fa-file-alt"></i> Content
+                </a>
+                <a href="#" class="nav-link" onclick="showTab('reports')">
+                    <i class="fas fa-flag"></i> Reports
+                </a>
+                <a href="#" class="nav-link" onclick="showTab('settings')">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <button class="btn btn-outline" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon users">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-change positive" id="userChange">
+                        <i class="fas fa-arrow-up"></i> 0% this week
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon topics">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-value" id="totalTopics">0</div>
+                    <div class="stat-label">Topics</div>
+                    <div class="stat-change positive" id="topicChange">
+                        <i class="fas fa-arrow-up"></i> 0% this week
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon posts">
+                        <i class="fas fa-reply"></i>
+                    </div>
+                    <div class="stat-value" id="totalPosts">0</div>
+                    <div class="stat-label">Posts</div>
+                    <div class="stat-change positive" id="postChange">
+                        <i class="fas fa-arrow-up"></i> 0% this week
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon online">
+                        <i class="fas fa-signal"></i>
+                    </div>
+                    <div class="stat-value" id="onlineNow">0</div>
+                    <div class="stat-label">Online Now</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-circle status-online"></i> Live
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-history"></i> Recent Activity
+                    </h2>
+                    <button class="btn btn-outline" onclick="refreshActivity()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <table class="admin-table" id="activityTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Details</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activityBody">
+                        <!-- Activity rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recent Users -->
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-plus"></i> Recent Registrations
+                    </h2>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search users..." 
+                               oninput="searchUsers(this.value)">
+                    </div>
+                </div>
+                <table class="admin-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Posts</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <!-- User rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Management Tab -->
+        <div id="users-tab" class="tab-content">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-cog"></i> User Management
+                    </h2>
+                    <button class="btn btn-primary" onclick="showAddUserModal()">
+                        <i class="fas fa-user-plus"></i> Add User
+                    </button>
+                </div>
+                
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="showUserTab('all')">All Users</button>
+                    <button class="tab-btn" onclick="showUserTab('admins')">Admins</button>
+                    <button class="tab-btn" onclick="showUserTab('moderators')">Moderators</button>
+                    <button class="tab-btn" onclick="showUserTab('banned')">Banned</button>
+                </div>
+                
+                <div id="user-management-table"></div>
+            </div>
+        </div>
+
+        <!-- Content Management Tab -->
+        <div id="content-tab" class="tab-content">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-edit"></i> Content Management
+                    </h2>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search topics..." 
+                               oninput="searchTopics(this.value)">
+                    </div>
+                </div>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Author</th>
+                            <th>Replies</th>
+                            <th>Views</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentBody">
+                        <!-- Content rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports-tab" class="tab-content">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-flag"></i> Reported Content
+                    </h2>
+                    <div class="action-buttons">
+                        <button class="btn btn-outline" onclick="filterReports('all')">All</button>
+                        <button class="btn btn-outline" onclick="filterReports('pending')">Pending</button>
+                        <button class="btn btn-outline" onclick="filterReports('resolved')">Resolved</button>
+                    </div>
+                </div>
+                
+                <div id="reportsList">
+                    <!-- Reports will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings-tab" class="tab-content">
+            <div class="admin-section">
+                <h2 class="section-title">
+                    <i class="fas fa-sliders-h"></i> Forum Settings
+                </h2>
+                
+                <form id="forumSettings">
+                    <div class="form-group">
+                        <label class="form-label">Forum Name</label>
+                        <input type="text" class="form-control" id="forumName" value="ComicHub">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Forum Description</label>
+                        <textarea class="form-control form-textarea" id="forumDescription">A community for comic enthusiasts</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Registration</label>
+                        <select class="form-select" id="registrationType">
+                            <option value="open">Open Registration</option>
+                            <option value="invite">Invite Only</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Default User Role</label>
+                        <select class="form-select" id="defaultRole">
+                            <option value="member">Member</option>
+                            <option value="verified">Verified</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="emailVerification"> Require Email Verification
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="moderateTopics"> Moderate New Topics
+                        </label>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="editUserModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit User</h3>
+                <button class="close-modal" onclick="hideModal('editUserModal')">×</button>
+            </div>
+            <form id="editUserForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="editUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="editEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-select" id="editRole" required>
+                        <option value="member">Member</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                        <option value="banned">Banned</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-control form-textarea" id="editBio"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Reputation</label>
+                    <input type="number" class="form-control" id="editReputation" min="0">
+                </div>
+                
+                <input type="hidden" id="editUserId">
+                
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="hideModal('editUserModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New User</h3>
+                <button class="close-modal" onclick="hideModal('addUserModal')">×</button>
+            </div>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="newUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="newEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="newPassword" required minlength="6">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-select" id="newRole" required>
+                        <option value="member">Member</option>
+                        <option value="moderator">Moderator</option>
+                    </select>
+                </div>
+                
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="hideModal('addUserModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQGhbrblh7BvoNiBzcj3CZNhDK6aB4psU",
+            authDomain: "comiczone-72095.firebaseapp.com",
+            projectId: "comiczone-72095",
+            storageBucket: "comiczone-72095.firebasestorage.app",
+            messagingSenderId: "380867871740",
+            appId: "1:380867871740:web:22b094a6fa7517b2a4a879"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUser = null;
+        let userData = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdminAccess();
+            loadDashboardStats();
+            loadRecentActivity();
+            loadRecentUsers();
+        });
+
+        // Check if user is admin
+        async function checkAdminAccess() {
+            auth.onAuthStateChanged(async (user) => {
+                if (!user) {
+                    // Redirect to login if not authenticated
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                currentUser = user;
+                
+                // Check if user is admin
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                userData = userDoc.data();
+                
+                if (!userData || !['admin', 'moderator'].includes(userData.role)) {
+                    showToast('Access denied. Admin privileges required.', 'danger');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                // Total users
+                const usersSnapshot = await db.collection('users').get();
+                document.getElementById('totalUsers').textContent = usersSnapshot.size;
+                
+                // Total topics
+                const topicsSnapshot = await db.collection('topics').get();
+                document.getElementById('totalTopics').textContent = topicsSnapshot.size;
+                
+                // Total posts
+                const postsSnapshot = await db.collection('posts').get();
+                document.getElementById('totalPosts').textContent = postsSnapshot.size;
+                
+                // Online users
+                const onlineSnapshot = await db.collection('online_users').get();
+                document.getElementById('onlineNow').textContent = onlineSnapshot.size;
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load recent activity
+        async function loadRecentActivity() {
+            try {
+                const activityBody = document.getElementById('activityBody');
+                activityBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px;">
+                            <div class="loading"></div>
+                            <div style="margin-top: 10px; color: var(--text-light);">Loading activity...</div>
+                        </td>
+                    </tr>
+                `;
+                
+                // Get recent posts
+                const postsSnapshot = await db.collection('posts')
+                    .orderBy('createdAt', 'desc')
+                    .limit(10)
+                    .get();
+                
+                // Get recent users
+                const usersSnapshot = await db.collection('users')
+                    .orderBy('joinDate', 'desc')
+                    .limit(10)
+                    .get();
+                
+                activityBody.innerHTML = '';
+                
+                // Add post activities
+                postsSnapshot.forEach(doc => {
+                    const post = doc.data();
+                    const timeAgo = formatTimeAgo(post.createdAt);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; 
+                                     background: ${post.authorAvatarColor || '#3b82f6'}; 
+                                     display: flex; align-items: center; justify-content: center; 
+                                     color: white; font-weight: 600;">
+                                    ${post.authorName?.charAt(0) || 'U'}
+                                </div>
+                                ${post.authorName}
+                            </div>
+                        </td>
+                        <td>${post.isFirstPost ? 'Created topic' : 'Replied to topic'}</td>
+                        <td>${post.content.substring(0, 50)}${post.content.length > 50 ? '...' : ''}</td>
+                        <td>${timeAgo}</td>
+                    `;
+                    activityBody.appendChild(row);
+                });
+                
+                // Add user registration activities
+                usersSnapshot.forEach(doc => {
+                    const user = doc.data();
+                    const timeAgo = formatTimeAgo(user.joinDate);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; 
+                                     background: ${user.avatarColor || '#3b82f6'}; 
+                                     display: flex; align-items: center; justify-content: center; 
+                                     color: white; font-weight: 600;">
+                                    ${user.username?.charAt(0) || 'U'}
+                                </div>
+                                ${user.username}
+                            </div>
+                        </td>
+                        <td>Registered</td>
+                        <td>New member joined</td>
+                        <td>${timeAgo}</td>
+                    `;
+                    activityBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading activity:', error);
+                document.getElementById('activityBody').innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--danger); padding: 20px;">
+                            Error loading activity
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Load recent users
+        async function loadRecentUsers() {
+            try {
+                const usersBody = document.getElementById('usersBody');
+                usersBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px;">
+                            <div class="loading"></div>
+                            <div style="margin-top: 10px; color: var(--text-light);">Loading users...</div>
+                        </td>
+                    </tr>
+                `;
+                
+                const usersSnapshot = await db.collection('users')
+                    .orderBy('joinDate', 'desc')
+                    .limit(20)
+                    .get();
+                
+                usersBody.innerHTML = '';
+                
+                if (usersSnapshot.empty) {
+                    usersBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-light); padding: 30px;">
+                                No users found
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                usersSnapshot.forEach(doc => {
+                    const user = doc.data();
+                    const timeAgo = formatTimeAgo(user.joinDate);
+                    const badgeClass = `badge-${user.role || 'member'}`;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; 
+                                     background: ${user.avatarColor || '#3b82f6'}; 
+                                     display: flex; align-items: center; justify-content: center; 
+                                     color: white; font-weight: 600; font-size: 16px;">
+                                    ${user.username?.charAt(0) || 'U'}
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">${user.username}</div>
+                                    <div style="font-size: 12px; color: var(--text-light);">${user.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge ${badgeClass}">${user.role || 'member'}</span></td>
+                        <td>${user.postCount || 0}</td>
+                        <td>${timeAgo}</td>
+                        <td>
+                            <span class="status-dot ${user.status === 'online' ? 'status-online' : 'status-offline'}"></span>
+                            ${user.status || 'offline'}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline btn-sm" onclick="editUser('${doc.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    usersBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading users:', error);
+                usersBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: var(--danger); padding: 20px;">
+                            Error loading users
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Tab navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Update nav link
+            const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(
+                link => link.getAttribute('onclick')?.includes(tabName)
+            );
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Load tab-specific data
+            switch(tabName) {
+                case 'users':
+                    loadUserManagement();
+                    break;
+                case 'content':
+                    loadContentManagement();
+                    break;
+                case 'reports':
+                    loadReports();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+            }
+        }
+
+        // User management tab
+        function showUserTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter users
+            filterUsers(tab);
+        }
+
+        async function filterUsers(filter) {
+            try {
+                let query = db.collection('users');
+                
+                switch(filter) {
+                    case 'admins':
+                        query = query.where('role', '==', 'admin');
+                        break;
+                    case 'moderators':
+                        query = query.where('role', '==', 'moderator');
+                        break;
+                    case 'banned':
+                        query = query.where('role', '==', 'banned');
+                        break;
+                }
+                
+                const snapshot = await query.orderBy('joinDate', 'desc').get();
+                displayUserManagementTable(snapshot);
+                
+            } catch (error) {
+                console.error('Error filtering users:', error);
+            }
+        }
+
+        function displayUserManagementTable(snapshot) {
+            const container = document.getElementById('user-management-table');
+            let html = `
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Posts</th>
+                            <th>Reputation</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            if (snapshot.empty) {
+                html += `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px; color: var(--text-light);">
+                            No users found
+                        </td>
+                    </tr>
+                `;
+            } else {
+                snapshot.forEach(doc => {
+                    const user = doc.data();
+                    const timeAgo = formatTimeAgo(user.joinDate);
+                    const badgeClass = `badge-${user.role || 'member'}`;
+                    
+                    html += `
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 36px; height: 36px; border-radius: 50%; 
+                                         background: ${user.avatarColor || '#3b82f6'}; 
+                                         display: flex; align-items: center; justify-content: center; 
+                                         color: white; font-weight: 600;">
+                                        ${user.username?.charAt(0) || 'U'}
+                                    </div>
+                                    ${user.username}
+                                </div>
+                            </td>
+                            <td>${user.email}</td>
+                            <td><span class="badge ${badgeClass}">${user.role || 'member'}</span></td>
+                            <td>${user.postCount || 0}</td>
+                            <td>${user.reputation || 0}</td>
+                            <td>${timeAgo}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-outline btn-sm" onclick="editUser('${doc.id}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteUser('${doc.id}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    ${user.role !== 'admin' ? `
+                                        <button class="btn btn-warning btn-sm" onclick="banUser('${doc.id}')">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        // Edit user
+        async function editUser(userId) {
+            try {
+                const userDoc = await db.collection('users').doc(userId).get();
+                const user = userDoc.data();
+                
+                if (!user) return;
+                
+                document.getElementById('editUserId').value = userId;
+                document.getElementById('editUsername').value = user.username || '';
+                document.getElementById('editEmail').value = user.email || '';
+                document.getElementById('editRole').value = user.role || 'member';
+                document.getElementById('editBio').value = user.bio || '';
+                document.getElementById('editReputation').value = user.reputation || 0;
+                
+                showModal('editUserModal');
+                
+            } catch (error) {
+                console.error('Error loading user:', error);
+                showToast('Error loading user data', 'danger');
+            }
+        }
+
+        // Save edited user
+        document.getElementById('editUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userId = document.getElementById('editUserId').value;
+            const updates = {
+                username: document.getElementById('editUsername').value,
+                email: document.getElementById('editEmail').value,
+                role: document.getElementById('editRole').value,
+                bio: document.getElementById('editBio').value,
+                reputation: parseInt(document.getElementById('editReputation').value) || 0
+            };
+            
+            try {
+                await db.collection('users').doc(userId).update(updates);
+                showToast('User updated successfully', 'success');
+                hideModal('editUserModal');
+                loadRecentUsers();
+                loadDashboardStats();
+                
+            } catch (error) {
+                console.error('Error updating user:', error);
+                showToast('Error updating user', 'danger');
+            }
+        });
+
+        // Add new user
+        function showAddUserModal() {
+            showModal('addUserModal');
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('newUsername').value;
+            const email = document.getElementById('newEmail').value;
+            const password = document.getElementById('newPassword').value;
+            const role = document.getElementById('newRole').value;
+            
+            try {
+                // Create user in Firebase Auth
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                
+                // Create user profile in Firestore
+                await db.collection('users').doc(userCredential.user.uid).set({
+                    username: username,
+                    email: email,
+                    role: role,
+                    joinDate: new Date().toISOString(),
+                    postCount: 0,
+                    topicCount: 0,
+                    reputation: 0,
+                    avatarColor: getRandomColor(),
+                    bio: '',
+                    status: 'offline'
+                });
+                
+                showToast('User created successfully', 'success');
+                hideModal('addUserModal');
+                document.getElementById('addUserForm').reset();
+                loadRecentUsers();
+                loadDashboardStats();
+                
+            } catch (error) {
+                console.error('Error creating user:', error);
+                showToast('Error creating user: ' + error.message, 'danger');
+            }
+        });
+
+        // Delete user
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+            
+            try {
+                await db.collection('users').doc(userId).delete();
+                showToast('User deleted successfully', 'success');
+                loadRecentUsers();
+                loadDashboardStats();
+                
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                showToast('Error deleting user', 'danger');
+            }
+        }
+
+        // Ban user
+        async function banUser(userId) {
+            if (!confirm('Are you sure you want to ban this user?')) return;
+            
+            try {
+                await db.collection('users').doc(userId).update({
+                    role: 'banned',
+                    bannedAt: new Date().toISOString(),
+                    bannedBy: currentUser.uid
+                });
+                
+                showToast('User banned successfully', 'success');
+                loadRecentUsers();
+                
+            } catch (error) {
+                console.error('Error banning user:', error);
+                showToast('Error banning user', 'danger');
+            }
+        }
+
+        // Content management
+        async function loadContentManagement() {
+            try {
+                const contentBody = document.getElementById('contentBody');
+                contentBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px;">
+                            <div class="loading"></div>
+                            <div style="margin-top: 10px; color: var(--text-light);">Loading content...</div>
+                        </td>
+                    </tr>
+                `;
+                
+                const topicsSnapshot = await db.collection('topics')
+                    .orderBy('createdAt', 'desc')
+                    .limit(50)
+                    .get();
+                
+                contentBody.innerHTML = '';
+                
+                if (topicsSnapshot.empty) {
+                    contentBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--text-light); padding: 30px;">
+                                No topics found
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                topicsSnapshot.forEach(doc => {
+                    const topic = doc.data();
+                    const timeAgo = formatTimeAgo(topic.createdAt);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="font-weight: 500; margin-bottom: 4px;">${topic.title}</div>
+                            <div style="font-size: 12px; color: var(--text-light);">
+                                ${topic.category} • ${topic.tags?.join(', ') || 'No tags'}
+                            </div>
+                        </td>
+                        <td>${topic.authorName}</td>
+                        <td>${topic.replyCount || 0}</td>
+                        <td>${topic.viewCount || 0}</td>
+                        <td>
+                            ${topic.isLocked ? '<span class="badge badge-banned">Locked</span>' : ''}
+                            ${topic.isPinned ? '<span class="badge badge-moderator">Pinned</span>' : ''}
+                        </td>
+                        <td>${timeAgo}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline btn-sm" onclick="viewTopic('${doc.id}')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="toggleTopicLock('${doc.id}', ${topic.isLocked})">
+                                    <i class="fas fa-${topic.isLocked ? 'unlock' : 'lock'}"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteTopic('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    contentBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading content:', error);
+                contentBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: var(--danger); padding: 20px;">
+                            Error loading content
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        async function toggleTopicLock(topicId, isCurrentlyLocked) {
+            try {
+                await db.collection('topics').doc(topicId).update({
+                    isLocked: !isCurrentlyLocked
+                });
+                
+                showToast(`Topic ${isCurrentlyLocked ? 'unlocked' : 'locked'}`, 'success');
+                loadContentManagement();
+                
+            } catch (error) {
+                console.error('Error toggling topic lock:', error);
+                showToast('Error updating topic', 'danger');
+            }
+        }
+
+        async function deleteTopic(topicId) {
+            if (!confirm('Are you sure you want to delete this topic? All replies will also be deleted.')) return;
+            
+            try {
+                // Delete topic
+                await db.collection('topics').doc(topicId).delete();
+                
+                // Delete all posts in this topic
+                const postsSnapshot = await db.collection('posts')
+                    .where('topicId', '==', topicId)
+                    .get();
+                
+                const batch = db.batch();
+                postsSnapshot.docs.forEach(doc => {
+                    batch.delete(doc.ref);
+                });
+                await batch.commit();
+                
+                showToast('Topic deleted successfully', 'success');
+                loadContentManagement();
+                loadDashboardStats();
+                
+            } catch (error) {
+                console.error('Error deleting topic:', error);
+                showToast('Error deleting topic', 'danger');
+            }
+        }
+
+        function viewTopic(topicId) {
+            window.open(`topic.html?id=${topicId}`, '_blank');
+        }
+
+        // Search functionality
+        async function searchUsers(query) {
+            if (!query.trim()) {
+                loadRecentUsers();
+                return;
+            }
+            
+            try {
+                const usersBody = document.getElementById('usersBody');
+                usersBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px;">
+                            <div class="loading"></div>
+                            <div style="margin-top: 10px; color: var(--text-light);">Searching...</div>
+                        </td>
+                    </tr>
+                `;
+                
+                const snapshot = await db.collection('users')
+                    .where('username', '>=', query)
+                    .where('username', '<=', query + '\uf8ff')
+                    .limit(20)
+                    .get();
+                
+                usersBody.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    usersBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-light); padding: 30px;">
+                                No users found matching "${query}"
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                snapshot.forEach(doc => {
+                    const user = doc.data();
+                    const timeAgo = formatTimeAgo(user.joinDate);
+                    const badgeClass = `badge-${user.role || 'member'}`;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; 
+                                     background: ${user.avatarColor || '#3b82f6'}; 
+                                     display: flex; align-items: center; justify-content: center; 
+                                     color: white; font-weight: 600; font-size: 16px;">
+                                    ${user.username?.charAt(0) || 'U'}
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">${user.username}</div>
+                                    <div style="font-size: 12px; color: var(--text-light);">${user.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge ${badgeClass}">${user.role || 'member'}</span></td>
+                        <td>${user.postCount || 0}</td>
+                        <td>${timeAgo}</td>
+                        <td>
+                            <span class="status-dot ${user.status === 'online' ? 'status-online' : 'status-offline'}"></span>
+                            ${user.status || 'offline'}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline btn-sm" onclick="editUser('${doc.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    usersBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error searching users:', error);
+            }
+        }
+
+        async function searchTopics(query) {
+            // Similar to searchUsers but for topics
+            // You can implement this based on your needs
+        }
+
+        // Reports management
+        async function loadReports() {
+            // This would load reported content from a 'reported_content' collection
+            // You need to create this collection in your Firestore
+        }
+
+        function filterReports(status) {
+            // Filter reports by status
+        }
+
+        // Settings management
+        async function loadSettings() {
+            // Load forum settings from Firestore
+            try {
+                const settingsDoc = await db.collection('forum_settings').doc('main').get();
+                if (settingsDoc.exists) {
+                    const settings = settingsDoc.data();
+                    document.getElementById('forumName').value = settings.forumName || 'ComicHub';
+                    document.getElementById('forumDescription').value = settings.forumDescription || '';
+                    document.getElementById('registrationType').value = settings.registrationType || 'open';
+                    document.getElementById('defaultRole').value = settings.defaultRole || 'member';
+                    document.getElementById('emailVerification').checked = settings.emailVerification || false;
+                    document.getElementById('moderateTopics').checked = settings.moderateTopics || false;
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        async function saveSettings() {
+            const settings = {
+                forumName: document.getElementById('forumName').value,
+                forumDescription: document.getElementById('forumDescription').value,
+                registrationType: document.getElementById('registrationType').value,
+                defaultRole: document.getElementById('defaultRole').value,
+                emailVerification: document.getElementById('emailVerification').checked,
+                moderateTopics: document.getElementById('moderateTopics').checked,
+                updatedAt: new Date().toISOString(),
+                updatedBy: currentUser.uid
+            };
+            
+            try {
+                await db.collection('forum_settings').doc('main').set(settings, { merge: true });
+                showToast('Settings saved successfully', 'success');
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showToast('Error saving settings', 'danger');
+            }
+        }
+
+        // Utility functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}" 
+                   style="color: ${type === 'success' ? 'var(--success)' : type === 'danger' ? 'var(--danger)' : 'var(--primary)'};">
+                </i>
+                <div>
+                    <div style="font-weight: 500;">${message}</div>
+                    <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">
+                        Just now
+                    </div>
+                </div>
+                <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: var(--text-light); cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+
+        function formatTimeAgo(timestamp) {
+            if (!timestamp) return 'Just now';
+            
+            const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp.toDate();
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+            return `${Math.floor(seconds / 86400)}d ago`;
+        }
+
+        function getRandomColor() {
+            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function refreshActivity() {
+            loadRecentActivity();
+            showToast('Activity refreshed', 'success');
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Make functions available globally
+        window.showTab = showTab;
+        window.showUserTab = showUserTab;
+        window.editUser = editUser;
+        window.deleteUser = deleteUser;
+        window.banUser = banUser;
+        window.showAddUserModal = showAddUserModal;
+        window.toggleTopicLock = toggleTopicLock;
+        window.deleteTopic = deleteTopic;
+        window.viewTopic = viewTopic;
+        window.searchUsers = searchUsers;
+        window.searchTopics = searchTopics;
+        window.filterReports = filterReports;
+        window.saveSettings = saveSettings;
+        window.showModal = showModal;
+        window.hideModal = hideModal;
+        window.refreshActivity = refreshActivity;
+        window.logout = logout;
+    </script>
+</body>
+</html>
