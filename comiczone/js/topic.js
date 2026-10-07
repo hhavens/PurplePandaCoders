@@ -199,11 +199,17 @@ function renderPost(postId, post, isOriginal = false, container = null) {
         
         ${post.attachments && post.attachments.length > 0 ? `
             <div class="upload-preview" style="margin-top: 20px;">
-                ${post.attachments.map(attachment => `
+                ${post.attachments.map(attachment => attachment.type?.startsWith('image/') ? `
                     <div class="upload-item">
                         <img src="${attachment.url}" alt="${attachment.name}" onclick="openImage('${attachment.url}')" 
                              style="cursor: pointer;">
                     </div>
+                ` : `
+                    <a href="${attachment.url}" download="${attachment.name}" target="_blank" rel="noopener"
+                       style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; 
+                              border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none;">
+                        <i class="fas fa-file-download"></i> ${attachment.name}
+                    </a>
                 `).join('')}
             </div>
         ` : ''}
@@ -303,7 +309,7 @@ function renderReplyForm() {
                 <label style="margin-left: auto; cursor: pointer; padding: 8px 12px; border: 1px solid var(--border); 
                        border-radius: 6px; background: white; color: var(--text);">
                     <i class="fas fa-paperclip"></i> Attach Files
-                    <input type="file" multiple accept="image/*,.pdf,.doc,.docx" 
+                    <input type="file" multiple accept="image/*,.pdf,.doc,.docx,.cbl" 
                            onchange="handleFileUpload(event)" style="display: none;">
                 </label>
             </div>
@@ -448,41 +454,41 @@ function handleFileUpload(event) {
         }
         
         uploadedFiles.push(file);
-        
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'upload-item';
-                previewItem.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <button class="remove-upload" onclick="removeUpload('${file.name}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                preview.appendChild(previewItem);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            const previewItem = document.createElement('div');
-            previewItem.className = 'upload-item';
-            previewItem.innerHTML = `
-                <div style="width: 100px; height: 100px; background: var(--light-bg); border-radius: 8px; 
-                     display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                    <i class="fas fa-file" style="font-size: 24px; color: var(--text-light); margin-bottom: 8px;"></i>
-                    <div style="font-size: 11px; color: var(--text); text-align: center; padding: 0 5px;">
-                        ${file.name}
-                    </div>
-                </div>
-                <button class="remove-upload" onclick="removeUpload('${file.name}')">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            preview.appendChild(previewItem);
-        }
+        appendUploadPreview(preview, file);
     });
     
     event.target.value = '';
+}
+
+function appendUploadPreview(preview, file) {
+    const previewItem = document.createElement('div');
+    previewItem.className = 'upload-item';
+    const removeButton = `
+        <button class="remove-upload" onclick="removeUpload('${file.name}')">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewItem.innerHTML = `<img src="${e.target.result}" alt="${file.name}">${removeButton}`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewItem.innerHTML = `
+            <div style="width: 100px; height: 100px; background: var(--light-bg); border-radius: 8px; 
+                 display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <i class="fas fa-file" style="font-size: 24px; color: var(--text-light); margin-bottom: 8px;"></i>
+                <div style="font-size: 11px; color: var(--text); text-align: center; padding: 0 5px;">
+                    ${file.name}
+                </div>
+            </div>
+            ${removeButton}
+        `;
+    }
+    
+    preview.appendChild(previewItem);
 }
 
 function removeUpload(fileName) {
@@ -493,26 +499,7 @@ function removeUpload(fileName) {
 function renderUploadPreview() {
     const preview = document.getElementById('uploadPreview');
     preview.innerHTML = '';
-    
-    uploadedFiles.forEach(file => {
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'upload-item';
-                previewItem.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <button class="remove-upload" onclick="removeUpload('${file.name}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                preview.appendChild(previewItem);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            // Handle non-image files similarly
-        }
-    });
+    uploadedFiles.forEach(file => appendUploadPreview(preview, file));
 }
 
 async function incrementViewCount() {
