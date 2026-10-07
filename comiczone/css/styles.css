@@ -220,3 +220,24 @@ footer {
     max-width: 100%;
   }
 }
+
+/* Guide table of contents */
+.toc {
+  margin: 0 0 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.toc ol {
+  margin-bottom: 0;
+}
+
+.toc a {
+  margin: 0;
+}
+
+section[id] {
+  scroll-margin-top: 1rem;
+}

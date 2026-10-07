@@ -1341,15 +1341,14 @@
                     attachments: []
                 });
 
-                await db.collection('users').doc(currentUser.uid).update({
-                    topicCount: firebase.firestore.FieldValue.increment(1)
-                });
-
-                const categoryMatch = loadedCategories.find(cat => cat.name === category);
-                if (categoryMatch) {
-                    await db.collection('categories').doc(categoryMatch.id).update({
+                // Counters are best-effort; a failure here shouldn't block the new topic.
+                // Category topicCount is maintained by the updateCategoryStats Cloud Function.
+                try {
+                    await db.collection('users').doc(currentUser.uid).update({
                         topicCount: firebase.firestore.FieldValue.increment(1)
                     });
+                } catch (error) {
+                    console.warn('Could not update user topicCount:', error);
                 }
 
                 hideNewTopicModal();
