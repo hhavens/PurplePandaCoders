@@ -1,0 +1,101 @@
+rules_version = '2';
+
+// Firestore security rules for the ComicHub forum.
+// Deploy by pasting into Firebase console → Firestore Database → Rules → Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function role() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isStaff() {
+      return signedIn() && role() in ['admin', 'moderator'];
+    }
+
+    function isAdmin() {
+      return signedIn() && role() == 'admin';
+    }
+
+    // True when an update only touches the listed fields (used for counters)
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    // ---------- Users ----------
+    match /users/{userId} {
+      allow read: if true;
+      // New profiles must start as a regular member
+      allow create: if isSelf(userId) && request.resource.data.role == 'member';
+      // Users can edit their own profile but not promote themselves
+      allow update: if (isSelf(userId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']))
+                    || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- Categories ----------
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---------- Topics ----------
+    match /topics/{topicId} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.authorId == request.auth.uid;
+      allow update: if (signedIn() && resource.data.authorId == request.auth.uid)
+                    || isStaff()
+                    // anyone signed in can bump view/reply counters when replying or viewing
+                    || (signedIn() && onlyChanges(['viewCount', 'replyCount', 'lastReplyAt']));
+      allow delete: if isStaff();
+    }
+
+    // ---------- Posts ----------
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.authorId == request.auth.uid;
+      allow update: if (signedIn() && resource.data.authorId == request.auth.uid)
+                    || isStaff()
+                    || (signedIn() && onlyChanges(['likes']));
+      allow delete: if isStaff();
+    }
+
+    // ---------- Likes & subscriptions (doc id is <id>_<uid>) ----------
+    match /likes/{likeId} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow delete: if signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    match /subscriptions/{subscriptionId} {
+      allow read: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow delete: if signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // ---------- Notifications ----------
+    match /notifications/{notificationId} {
+      allow read, update: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.senderId == request.auth.uid;
+      allow delete: if signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // ---------- Presence & typing ----------
+    match /online_users/{userId} {
+      allow read: if true;
+      allow write: if isSelf(userId);
+    }
+
+    match /typing_indicators/{topicId} {
+      allow read, write: if signedIn();
+    }
+  }
+}
