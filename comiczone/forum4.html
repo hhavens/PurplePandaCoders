@@ -979,7 +979,7 @@
                                 </div>
                                 <div class="category-info">
                                     <h3>${cat.name}</h3>
-                                    <p>${cat.description}</p>
+                                    <p>${cat.description || ''}</p>
                                 </div>
                             </div>
                             <div class="category-stats">
@@ -1220,6 +1220,10 @@
         }
 
         function filterTopicsByCategory(categoryName) {
+            if (!document.querySelector('.topics-list')) {
+                showToast(`No topics in ${categoryName} yet. Start one with New Topic!`);
+                return;
+            }
             const items = document.querySelectorAll('.topic-item');
             let visibleCount = 0;
             items.forEach(item => {
