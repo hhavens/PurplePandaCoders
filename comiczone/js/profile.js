@@ -140,19 +140,21 @@ async function loadUserTopics(userId) {
     const list = document.getElementById('userTopicsList');
 
     try {
+        // Filter on authorId alone (no composite index needed) and sort newest-first here
         const snapshot = await db.collection('topics')
             .where('authorId', '==', userId)
-            .orderBy('createdAt', 'desc')
-            .limit(10)
             .get();
+        const topics = snapshot.docs
+            .sort((a, b) => String(b.data().createdAt).localeCompare(String(a.data().createdAt)))
+            .slice(0, 10);
 
-        if (snapshot.empty) {
+        if (topics.length === 0) {
             list.innerHTML = `<p style="color: var(--text-light);">No topics started yet.</p>`;
             return;
         }
 
         list.innerHTML = '';
-        snapshot.forEach(doc => {
+        topics.forEach(doc => {
             const topic = doc.data();
             const link = document.createElement('a');
             link.href = `topic.html?id=${doc.id}`;
@@ -165,7 +167,7 @@ async function loadUserTopics(userId) {
         });
     } catch (error) {
         console.error('Error loading user topics:', error);
-        list.innerHTML = `<p style="color: var(--text-light);">Couldn't load topics.</p>`;
+        list.innerHTML = `<p style="color: var(--text-light);">Couldn't load topics: ${error.message || error}</p>`;
     }
 }
 

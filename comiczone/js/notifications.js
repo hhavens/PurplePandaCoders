@@ -6,15 +6,19 @@ async function subscribeToNotifications(userId) {
         notificationsListener();
     }
     
-    // Listen for new notifications
+    // Listen for new notifications. Equality filters only (no composite index
+    // needed); newest-first sorting happens here instead.
     notificationsListener = db.collection('notifications')
         .where('userId', '==', userId)
         .where('read', '==', false)
-        .orderBy('createdAt', 'desc')
-        .limit(20)
         .onSnapshot((snapshot) => {
+            const docs = snapshot.docs
+                .sort((a, b) => String(b.data().createdAt).localeCompare(String(a.data().createdAt)))
+                .slice(0, 20);
             updateNotificationBadge(snapshot.size);
-            renderNotifications(snapshot);
+            renderNotifications(docs);
+        }, (error) => {
+            console.error('Error loading notifications:', error);
         });
 }
 
@@ -30,13 +34,13 @@ function updateNotificationBadge(count) {
     }
 }
 
-function renderNotifications(snapshot) {
+function renderNotifications(docs) {
     const notificationList = document.getElementById('notificationList');
     if (!notificationList) return;
     
     notificationList.innerHTML = '';
     
-    if (snapshot.empty) {
+    if (docs.length === 0) {
         notificationList.innerHTML = `
             <div style="padding: 30px; text-align: center; color: var(--text-light);">
                 <i class="fas fa-bell-slash" style="font-size: 24px; margin-bottom: 10px;"></i>
@@ -46,7 +50,7 @@ function renderNotifications(snapshot) {
         return;
     }
     
-    snapshot.forEach((doc) => {
+    docs.forEach((doc) => {
         const notification = doc.data();
         const notificationElement = document.createElement('div');
         notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
