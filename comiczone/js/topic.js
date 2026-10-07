@@ -9,7 +9,7 @@ async function loadTopic() {
     topicId = urlParams.get('id');
     
     if (!topicId) {
-        window.location.href = 'index.html';
+        window.location.href = 'forum4.html';
         return;
     }
     
@@ -18,7 +18,7 @@ async function loadTopic() {
         const topicDoc = await db.collection('topics').doc(topicId).get();
         if (!topicDoc.exists) {
             showToast('Topic not found', 'danger');
-            window.location.href = 'index.html';
+            window.location.href = 'forum4.html';
             return;
         }
         

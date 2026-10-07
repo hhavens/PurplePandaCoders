@@ -553,14 +553,17 @@
     <!-- Header -->
     <header class="admin-header">
         <div class="header-content">
-            <a href="index.html" class="logo">
+            <a href="forum4.html" class="logo">
                 <div class="logo-icon">⚙️</div>
                 <div class="logo-text">Comic<span>Hub</span> Admin</div>
             </a>
             
             <div class="nav-links">
-                <a href="index.html" class="nav-link">
+                <a href="forum4.html" class="nav-link">
                     <i class="fas fa-home"></i> Forum
+                </a>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-book-open"></i> Comic Zone
                 </a>
                 <a href="admin.html" class="nav-link active">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -944,7 +947,7 @@
             auth.onAuthStateChanged(async (user) => {
                 if (!user) {
                     // Redirect to login if not authenticated
-                    window.location.href = 'index.html';
+                    window.location.href = 'forum4.html';
                     return;
                 }
                 
@@ -956,7 +959,7 @@
                 
                 if (!userData || !['admin', 'moderator'].includes(userData.role)) {
                     showToast('Access denied. Admin privileges required.', 'danger');
-                    window.location.href = 'index.html';
+                    window.location.href = 'forum4.html';
                 }
             });
         }
@@ -1765,7 +1768,7 @@
 
         function logout() {
             auth.signOut().then(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'forum4.html';
             });
         }
 
