@@ -983,7 +983,10 @@
                 let html = '<div class="categories-grid">';
                 loadedCategories = [];
 
-                snapshot.forEach(doc => {
+                const sortedDocs = snapshot.docs.sort((a, b) =>
+                    (a.data().order ?? 999) - (b.data().order ?? 999) || a.data().name.localeCompare(b.data().name));
+
+                sortedDocs.forEach(doc => {
                     const cat = doc.data();
                     const catStats = stats[cat.name] || { topics: 0, posts: 0 };
                     loadedCategories.push({ id: doc.id, name: cat.name });

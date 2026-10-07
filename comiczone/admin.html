@@ -574,6 +574,9 @@
                 <a href="#" class="nav-link" onclick="showTab('content')">
                     <i class="fas fa-file-alt"></i> Content
                 </a>
+                <a href="#" class="nav-link" onclick="showTab('categories')">
+                    <i class="fas fa-folder"></i> Categories
+                </a>
                 <a href="#" class="nav-link" onclick="showTab('reports')">
                     <i class="fas fa-flag"></i> Reports
                 </a>
@@ -749,6 +752,36 @@
             </div>
         </div>
 
+        <!-- Categories Tab -->
+        <div id="categories-tab" class="tab-content">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-folder"></i> Categories
+                    </h2>
+                    <button class="btn btn-primary" onclick="showCategoryModal()">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </div>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Icon</th>
+                            <th>Topics</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoriesBody">
+                        <!-- Category rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Reports Tab -->
         <div id="reports-tab" class="tab-content">
             <div class="admin-section">
@@ -867,6 +900,43 @@
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" class="btn btn-outline" onclick="hideModal('editUserModal')">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="categoryModalTitle">Add Category</h3>
+                <button class="close-modal" onclick="hideModal('categoryModal')">×</button>
+            </div>
+            <form id="categoryForm">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" id="categoryName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-control" id="categoryDescription">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Icon (Font Awesome name, e.g. comments, book, list)</label>
+                    <input type="text" class="form-control" id="categoryIcon" placeholder="folder">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Order (lower numbers show first)</label>
+                    <input type="number" class="form-control" id="categoryOrder" min="0">
+                </div>
+                
+                <input type="hidden" id="categoryId">
+                
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="hideModal('categoryModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Category</button>
                 </div>
             </form>
         </div>
@@ -1192,6 +1262,9 @@
                     break;
                 case 'content':
                     loadContentManagement();
+                    break;
+                case 'categories':
+                    loadCategoryManagement();
                     break;
                 case 'reports':
                     loadReports();
@@ -1706,6 +1779,130 @@
             }
         }
 
+        // ============ CATEGORIES ============
+        // Topics store their category by name, so renames and deletes check the topics too
+        let adminCategories = [];
+
+        async function loadCategoryManagement() {
+            const tbody = document.getElementById('categoriesBody');
+            try {
+                const [categoriesSnapshot, topicsSnapshot] = await Promise.all([
+                    db.collection('categories').get(),
+                    db.collection('topics').get()
+                ]);
+                
+                const topicCounts = {};
+                topicsSnapshot.forEach(doc => {
+                    const category = doc.data().category;
+                    topicCounts[category] = (topicCounts[category] || 0) + 1;
+                });
+                
+                adminCategories = categoriesSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || a.name.localeCompare(b.name));
+                
+                if (adminCategories.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-light);">No categories yet. Click Add Category to create one.</td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = adminCategories.map(cat => `
+                    <tr>
+                        <td>${cat.order ?? ''}</td>
+                        <td><strong>${cat.name}</strong></td>
+                        <td>${cat.description || ''}</td>
+                        <td><i class="fas fa-${cat.icon || 'folder'}"></i> ${cat.icon || 'folder'}</td>
+                        <td>${topicCounts[cat.name] || 0}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline btn-sm" onclick="showCategoryModal('${cat.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCategory('${cat.id}', ${topicCounts[cat.name] || 0})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                tbody.innerHTML = `<tr><td colspan="6" style="color: var(--danger);">Error loading categories: ${error.message}</td></tr>`;
+            }
+        }
+
+        function showCategoryModal(categoryId = '') {
+            const cat = adminCategories.find(c => c.id === categoryId);
+            document.getElementById('categoryModalTitle').textContent = cat ? 'Edit Category' : 'Add Category';
+            document.getElementById('categoryId').value = categoryId;
+            document.getElementById('categoryName').value = cat?.name || '';
+            document.getElementById('categoryDescription').value = cat?.description || '';
+            document.getElementById('categoryIcon').value = cat?.icon || '';
+            document.getElementById('categoryOrder').value = cat ? (cat.order ?? '') : adminCategories.length + 1;
+            showModal('categoryModal');
+        }
+
+        document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const categoryId = document.getElementById('categoryId').value;
+            const name = document.getElementById('categoryName').value.trim();
+            const orderValue = document.getElementById('categoryOrder').value;
+            const data = {
+                name,
+                description: document.getElementById('categoryDescription').value.trim(),
+                icon: document.getElementById('categoryIcon').value.trim() || 'folder',
+                order: orderValue === '' ? adminCategories.length + 1 : Number(orderValue)
+            };
+            
+            if (adminCategories.some(c => c.id !== categoryId && c.name.toLowerCase() === name.toLowerCase())) {
+                showToast('A category with that name already exists', 'warning');
+                return;
+            }
+            
+            try {
+                if (categoryId) {
+                    const oldName = adminCategories.find(c => c.id === categoryId)?.name;
+                    const batch = db.batch();
+                    batch.update(db.collection('categories').doc(categoryId), data);
+                    
+                    // Move existing topics over to the new name
+                    if (oldName && oldName !== name) {
+                        const topicsSnapshot = await db.collection('topics').where('category', '==', oldName).get();
+                        topicsSnapshot.forEach(doc => batch.update(doc.ref, { category: name }));
+                    }
+                    await batch.commit();
+                } else {
+                    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'category';
+                    await db.collection('categories').doc(`${slug}-${Date.now().toString(36)}`).set(data);
+                }
+                
+                hideModal('categoryModal');
+                showToast('Category saved', 'success');
+                loadCategoryManagement();
+            } catch (error) {
+                console.error('Error saving category:', error);
+                showToast(`Error saving category: ${error.message}`, 'danger');
+            }
+        });
+
+        async function deleteCategory(categoryId, topicCount) {
+            if (topicCount > 0) {
+                showToast(`This category still has ${topicCount} topic${topicCount === 1 ? '' : 's'}. Delete or move them first.`, 'warning');
+                return;
+            }
+            if (!confirm('Delete this category?')) return;
+            
+            try {
+                await db.collection('categories').doc(categoryId).delete();
+                showToast('Category deleted', 'success');
+                loadCategoryManagement();
+            } catch (error) {
+                console.error('Error deleting category:', error);
+                showToast(`Error deleting category: ${error.message}`, 'danger');
+            }
+        }
+
         // Utility functions
         function showModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
@@ -1781,6 +1978,8 @@
         window.showAddUserModal = showAddUserModal;
         window.toggleTopicLock = toggleTopicLock;
         window.deleteTopic = deleteTopic;
+        window.showCategoryModal = showCategoryModal;
+        window.deleteCategory = deleteCategory;
         window.viewTopic = viewTopic;
         window.searchUsers = searchUsers;
         window.searchTopics = searchTopics;
