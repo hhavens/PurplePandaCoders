@@ -68,6 +68,15 @@ service cloud.firestore {
       allow delete: if isStaff();
     }
 
+    // ---------- Attachments (file contents for post attachments) ----------
+    match /attachments/{attachmentId} {
+      allow read: if true;
+      allow create: if signedIn()
+                    && request.resource.data.authorId == request.auth.uid
+                    && request.resource.data.data.size() < 1000000;
+      allow delete: if (signedIn() && resource.data.authorId == request.auth.uid) || isStaff();
+    }
+
     // ---------- Likes & subscriptions (doc id is <id>_<uid>) ----------
     match /likes/{likeId} {
       allow read: if true;

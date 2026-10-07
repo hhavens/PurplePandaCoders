@@ -201,11 +201,10 @@ function renderPost(postId, post, isOriginal = false, container = null) {
             <div class="upload-preview" style="margin-top: 20px;">
                 ${post.attachments.map(attachment => attachment.type?.startsWith('image/') ? `
                     <div class="upload-item">
-                        <img src="${attachment.url}" alt="${attachment.name}" onclick="openImage('${attachment.url}')" 
-                             style="cursor: pointer;">
+                        <img data-attachment-id="${attachment.id}" alt="${attachment.name}">
                     </div>
                 ` : `
-                    <a href="${attachment.url}" download="${attachment.name}" target="_blank" rel="noopener"
+                    <a href="#" onclick="downloadAttachment(event, '${attachment.id}')"
                        style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; 
                               border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none;">
                         <i class="fas fa-file-download"></i> ${attachment.name}
@@ -254,8 +253,48 @@ function renderPost(postId, post, isOriginal = false, container = null) {
     
     if (container) {
         container.appendChild(postElement);
+        loadAttachmentImages(postElement);
     } else {
-        document.getElementById('originalPost').innerHTML = postElement.outerHTML;
+        const originalPost = document.getElementById('originalPost');
+        originalPost.innerHTML = postElement.outerHTML;
+        loadAttachmentImages(originalPost);
+    }
+}
+
+// Attachment file contents live in the attachments collection; fill in image sources after render
+function loadAttachmentImages(element) {
+    element.querySelectorAll('img[data-attachment-id]').forEach(async (img) => {
+        try {
+            const doc = await db.collection('attachments').doc(img.dataset.attachmentId).get();
+            if (doc.exists) img.src = doc.data().data;
+        } catch (error) {
+            console.error('Error loading attachment:', error);
+        }
+    });
+}
+
+async function downloadAttachment(event, attachmentId) {
+    event.preventDefault();
+    try {
+        const doc = await db.collection('attachments').doc(attachmentId).get();
+        if (!doc.exists) {
+            showToast('Attachment not found', 'danger');
+            return;
+        }
+        
+        const { name, data } = doc.data();
+        const blob = await (await fetch(data)).blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error downloading attachment:', error);
+        showToast('Error downloading attachment', 'danger');
     }
 }
 
@@ -417,24 +456,50 @@ async function submitReply() {
     }
 }
 
+// Attachments are stored in Firestore (one doc per file) instead of Firebase Storage.
+// A Firestore doc maxes out at 1 MiB and base64 adds ~33%, so files must stay under ~700 KB.
+const MAX_ATTACHMENT_BYTES = 700 * 1024;
+
+function readAsDataURL(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+    });
+}
+
 async function uploadFile(file) {
     try {
-        // Create a unique filename
-        const fileName = `${Date.now()}-${file.name}`;
-        const storageRef = storage.ref(`forum-attachments/${fileName}`);
-        
-        // Show upload progress
         showToast(`Uploading ${file.name}...`, 'info');
         
-        // Upload file
-        const snapshot = await storageRef.put(file);
-        const downloadURL = await snapshot.ref.getDownloadURL();
+        // Shrink photos so they fit; GIFs are left alone so animations survive
+        let blob = file;
+        if (file.type.startsWith('image/') && file.type !== 'image/gif') {
+            blob = await uploadImage(file);
+        }
+        
+        if (blob.size > MAX_ATTACHMENT_BYTES) {
+            showToast(`${file.name} is too large (max 700 KB)`, 'warning');
+            return null;
+        }
+        
+        const type = blob.type || file.type || 'application/octet-stream';
+        const docRef = await db.collection('attachments').add({
+            name: file.name,
+            type: type,
+            size: blob.size,
+            data: await readAsDataURL(blob),
+            topicId: topicId,
+            authorId: currentUser.uid,
+            createdAt: new Date().toISOString()
+        });
         
         return {
+            id: docRef.id,
             name: file.name,
-            url: downloadURL,
-            type: file.type,
-            size: file.size
+            type: type,
+            size: blob.size
         };
     } catch (error) {
         console.error('Error uploading file:', error);
@@ -450,6 +515,11 @@ function handleFileUpload(event) {
     files.forEach(file => {
         if (uploadedFiles.length >= 5) {
             showToast('Maximum 5 files allowed', 'warning');
+            return;
+        }
+        
+        if (!file.type.startsWith('image/') && file.size > MAX_ATTACHMENT_BYTES) {
+            showToast(`${file.name} is too large (max 700 KB)`, 'warning');
             return;
         }
         
@@ -711,6 +781,7 @@ window.insertQuote = insertQuote;
 window.quotePost = quotePost;
 window.replyToPost = replyToPost;
 window.previewReply = previewReply;
+window.downloadAttachment = downloadAttachment;
 
 async function uploadImage(file) {
     // Compress image before upload
