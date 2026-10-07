@@ -769,6 +769,56 @@ window.addEventListener('beforeunload', () => {
 });
 
 window.loadTopic = loadTopic;
+// Attachment docs referenced by a post (older posts may have none)
+function attachmentRefs(post) {
+    return (post.attachments || [])
+        .filter(attachment => attachment.id)
+        .map(attachment => db.collection('attachments').doc(attachment.id));
+}
+
+async function deletePost(postId) {
+    try {
+        const postDoc = await db.collection('posts').doc(postId).get();
+        if (!postDoc.exists) return;
+        const post = postDoc.data();
+        
+        // Deleting the opening post removes the whole topic
+        if (post.isFirstPost) {
+            if (!confirm('Delete this topic and all of its replies?')) return;
+            
+            const postsSnapshot = await db.collection('posts')
+                .where('topicId', '==', topicId)
+                .get();
+            
+            const batch = db.batch();
+            postsSnapshot.docs.forEach(doc => {
+                batch.delete(doc.ref);
+                attachmentRefs(doc.data()).forEach(ref => batch.delete(ref));
+            });
+            batch.delete(db.collection('topics').doc(topicId));
+            await batch.commit();
+            
+            window.location.href = 'forum4.html';
+            return;
+        }
+        
+        if (!confirm('Delete this reply?')) return;
+        
+        const batch = db.batch();
+        batch.delete(postDoc.ref);
+        attachmentRefs(post).forEach(ref => batch.delete(ref));
+        batch.update(db.collection('topics').doc(topicId), {
+            replyCount: firebase.firestore.FieldValue.increment(-1)
+        });
+        await batch.commit();
+        
+        showToast('Reply deleted', 'success');
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        showToast(`Error deleting post: ${error.message || error}`, 'danger');
+    }
+}
+
 window.handleFileUpload = handleFileUpload;
 window.removeUpload = removeUpload;
 window.submitReply = submitReply;
@@ -784,6 +834,7 @@ window.quotePost = quotePost;
 window.replyToPost = replyToPost;
 window.previewReply = previewReply;
 window.downloadAttachment = downloadAttachment;
+window.deletePost = deletePost;
 
 async function uploadImage(file) {
     // Compress image before upload
