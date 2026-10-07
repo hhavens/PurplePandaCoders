@@ -116,16 +116,19 @@ function loadPosts() {
         postsListener();
     }
     
-    // Listen for posts in real-time
+    // Listen for posts in real-time. Filtering on topicId alone avoids needing a
+    // composite index; replies are picked out and sorted in the browser instead.
     postsListener = db.collection('posts')
         .where('topicId', '==', topicId)
-        .where('isFirstPost', '==', false)
-        .orderBy('createdAt', 'asc')
         .onSnapshot((snapshot) => {
             const postsContainer = document.getElementById('postsContainer');
             postsContainer.innerHTML = '';
             
-            if (snapshot.empty) {
+            const replies = snapshot.docs
+                .filter(doc => !doc.data().isFirstPost)
+                .sort((a, b) => String(a.data().createdAt).localeCompare(String(b.data().createdAt)));
+            
+            if (replies.length === 0) {
                 postsContainer.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: var(--text-light);">
                         <i class="fas fa-comment-slash" style="font-size: 48px; margin-bottom: 20px;"></i>
@@ -134,22 +137,21 @@ function loadPosts() {
                     </div>
                 `;
             } else {
-                snapshot.forEach((doc) => {
+                replies.forEach((doc) => {
                     renderPost(doc.id, doc.data(), false, postsContainer);
                 });
             }
             
             // Update reply count
-            updateReplyCount(snapshot.size);
+            updateReplyCount(replies.length);
             
             // Render reply form
             renderReplyForm();
         }, (error) => {
-            // e.g. a missing composite index — the console message includes a link to create it
             console.error('Error loading replies:', error);
             document.getElementById('postsContainer').innerHTML = `
                 <div style="text-align: center; padding: 40px; color: var(--text-light);">
-                    <p>Couldn't load replies.</p>
+                    <p>Couldn't load replies: ${error.message || error}</p>
                 </div>
             `;
             renderReplyForm();
@@ -503,7 +505,7 @@ async function uploadFile(file) {
         };
     } catch (error) {
         console.error('Error uploading file:', error);
-        showToast(`Error uploading ${file.name}`, 'danger');
+        showToast(`Error uploading ${file.name}: ${error.message || error}`, 'danger');
         return null;
     }
 }
