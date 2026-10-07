@@ -252,7 +252,7 @@ function renderBasicSearchResults(topicsSnapshot, usersSnapshot, query) {
                     <div style="font-weight: 500; margin-bottom: 4px;">${topic.title}</div>
                     <div style="font-size: 13px; color: var(--text-light);">
                         ${topic.replyCount || 0} replies • ${topic.viewCount || 0} views • 
-                        ${formatTimeAgo(topic.createdAt?.toDate())}
+                        ${formatTimeAgo(topic.createdAt)}
                     </div>
                 </a>
             `;

@@ -62,7 +62,7 @@ function renderNotifications(snapshot) {
                         ${notification.topicTitle ? `<div style="color: var(--primary); font-weight: 500; margin-top: 2px;">${notification.topicTitle}</div>` : ''}
                     </div>
                     <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">
-                        ${formatTimeAgo(notification.createdAt?.toDate())}
+                        ${formatTimeAgo(notification.createdAt)}
                     </div>
                 </div>
                 <button onclick="markNotificationAsRead('${doc.id}')" style="background: none; border: none; color: var(--text-light); cursor: pointer; padding: 4px;">

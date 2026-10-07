@@ -144,6 +144,15 @@ function loadPosts() {
             
             // Render reply form
             renderReplyForm();
+        }, (error) => {
+            // e.g. a missing composite index — the console message includes a link to create it
+            console.error('Error loading replies:', error);
+            document.getElementById('postsContainer').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: var(--text-light);">
+                    <p>Couldn't load replies.</p>
+                </div>
+            `;
+            renderReplyForm();
         });
 }
 
@@ -172,7 +181,7 @@ function renderPost(postId, post, isOriginal = false, container = null) {
                         ${isOriginal ? '<span style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">OP</span>' : ''}
                     </div>
                     <div style="color: var(--text-light); font-size: 14px;">
-                        ${formatTimeAgo(post.createdAt?.toDate())}
+                        ${formatTimeAgo(post.createdAt)}
                         ${post.editedAt ? ' (edited)' : ''}
                     </div>
                 </div>

@@ -30,6 +30,18 @@ function showToast(message, type = 'info') {
     }, 5000);
 }
 
+function formatTimeAgo(timestamp) {
+    if (!timestamp) return 'Just now';
+
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const seconds = Math.floor((new Date() - date) / 1000);
+
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
+}
+
 function getRandomColor() {
     const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
     return colors[Math.floor(Math.random() * colors.length)];
