@@ -776,6 +776,56 @@ function attachmentRefs(post) {
         .map(attachment => db.collection('attachments').doc(attachment.id));
 }
 
+// Edit a post in place: the content becomes editable with Save/Cancel underneath
+function editPost(postId) {
+    const contentDiv = document.querySelector(`#post-${postId} .post-content`);
+    if (!contentDiv || contentDiv.isContentEditable) return;
+    
+    const originalContent = contentDiv.innerHTML;
+    contentDiv.contentEditable = 'true';
+    contentDiv.style.cssText = 'border: 1px solid var(--primary); border-radius: 8px; padding: 12px; outline: none;';
+    contentDiv.focus();
+    
+    const controls = document.createElement('div');
+    controls.style.cssText = 'display: flex; gap: 10px; margin: 10px 0 20px;';
+    controls.innerHTML = `
+        <button class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+        <button class="btn btn-outline">Cancel</button>
+    `;
+    contentDiv.after(controls);
+    const [saveButton, cancelButton] = controls.querySelectorAll('button');
+    
+    const finish = (content) => {
+        contentDiv.contentEditable = 'false';
+        contentDiv.style.cssText = '';
+        contentDiv.innerHTML = content;
+        controls.remove();
+    };
+    
+    cancelButton.onclick = () => finish(originalContent);
+    saveButton.onclick = async () => {
+        const content = contentDiv.innerHTML.trim();
+        if (!content) {
+            showToast('Post cannot be empty', 'warning');
+            return;
+        }
+        
+        saveButton.disabled = true;
+        try {
+            await db.collection('posts').doc(postId).update({
+                content: content,
+                editedAt: new Date().toISOString()
+            });
+            finish(content);
+            showToast('Post updated', 'success');
+        } catch (error) {
+            console.error('Error editing post:', error);
+            showToast(`Error saving post: ${error.message || error}`, 'danger');
+            saveButton.disabled = false;
+        }
+    };
+}
+
 async function deletePost(postId) {
     try {
         const postDoc = await db.collection('posts').doc(postId).get();
@@ -834,6 +884,7 @@ window.quotePost = quotePost;
 window.replyToPost = replyToPost;
 window.previewReply = previewReply;
 window.downloadAttachment = downloadAttachment;
+window.editPost = editPost;
 window.deletePost = deletePost;
 
 async function uploadImage(file) {
