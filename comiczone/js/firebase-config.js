@@ -20,7 +20,11 @@ async function initFirebase() {
         auth = firebase.auth();
         db = firebase.firestore();
         // Long polling instead of a streaming connection: Safari's Advanced Privacy Protection can stall the stream, leaving loads hanging.
-        db.settings({ experimentalForceLongPolling: true, merge: true });
+        db.settings({
+            experimentalForceLongPolling: true,
+            experimentalAutoDetectLongPolling: false,
+            merge: true
+        });
         storage = firebase.storage();
         
         // Enable offline persistence
