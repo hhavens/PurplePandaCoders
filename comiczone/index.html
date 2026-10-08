@@ -1,58 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Comic Zone is a macOS application for managing and reading comic books, coming soon." />
-    <title>Comic Zone – Coming Soon</title>
-    <link rel="stylesheet" href="css/styles.css" />
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Comic Zone is a macOS application for organizing, managing, and reading comic books.">
+<title>Comic Zone – Coming Soon</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+:root{--cz-bg:#0b1020;--cz-card:#161e32;--cz-line:#2a3650;--cz-text:#f3f6ff;--cz-muted:#b1bed4;--cz-accent:#8b9dff}
+body{background:radial-gradient(ellipse at 50% 0%,#202c52 0%,#0b1020 55%);color:var(--cz-text);min-height:100vh}
+.cz-shell{max-width:1120px;margin:0 auto;padding:40px 24px 75px}
+.cz-hero{text-align:center;padding:55px 15px 60px}
+.cz-pill{display:inline-flex;align-items:center;gap:9px;border:1px solid #596aa1;background:#27365b;color:#e4eaff;border-radius:999px;padding:8px 15px;font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+.cz-dot{width:8px;height:8px;border-radius:50%;background:#aab7ff;box-shadow:0 0 12px #879bff}
+.cz-hero h1{font-size:clamp(2.8rem,7vw,5.2rem);letter-spacing:-.055em;line-height:1.08;margin:22px 0 16px;color:white}
+.cz-hero h1 span{background:linear-gradient(100deg,#91baff,#c8a8ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.cz-hero p{max-width:660px;margin:0 auto;color:#c0cce0;font-size:1.14rem;line-height:1.75}
+.cz-actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;margin-top:30px}
+.cz-button{display:inline-flex;align-items:center;gap:9px;padding:12px 19px;border-radius:12px;text-decoration:none!important;font-weight:700;transition:transform .2s,background .2s;border:1px solid #586b9d}
+.cz-button:hover{transform:translateY(-3px)}.cz-primary{background:#9aaaff;color:#101832!important;border-color:#9aaaff}.cz-secondary{background:#202d4c;color:#f2f5ff!important}
+.cz-section{margin-top:32px}.cz-heading{display:flex;align-items:center;gap:11px;margin:0 0 18px;font-size:1.55rem;color:#fff}.cz-heading svg{width:25px;height:25px;color:#aab8ff}
+.cz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.cz-card{border:1px solid var(--cz-line);border-radius:18px;background:linear-gradient(150deg,#1c2842,#141c2e);padding:25px;transition:transform .2s,border-color .2s}.cz-card:hover{transform:translateY(-4px);border-color:#697fb5}
+.cz-card-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#303d67;color:#c5cfff;margin-bottom:17px}.cz-card-icon svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cz-card h3{color:white;margin:0 0 8px;font-size:1.13rem}.cz-card p{color:var(--cz-muted);line-height:1.6;margin:0;font-size:.96rem}
+.cz-status{display:inline-flex;margin-top:16px;border-radius:99px;padding:5px 10px;font-size:.77rem;font-weight:700;background:#183f3b;color:#9ee8c3}.cz-status.planned{background:#3c3153;color:#d9c2ff}
+.cz-empty{padding:23px 25px;border:1px dashed #53627f;border-radius:16px;background:#172239;color:#c6d1e4;display:flex;gap:12px;align-items:center}.cz-empty svg{width:24px;height:24px;flex:none;color:#a6b8f8}
+.cz-bottom{margin-top:45px;text-align:center;border:1px solid #394a73;border-radius:20px;padding:33px 20px;background:linear-gradient(115deg,#26365c,#1c2542)}.cz-bottom h2{color:white;margin:0 0 8px}.cz-bottom p{color:#c8d2e5;margin:0}
+.cz-bottom .cz-actions{margin-top:21px}
+@media(max-width:650px){.cz-grid{grid-template-columns:1fr}.cz-shell{padding:18px 16px 50px}.cz-hero{padding:40px 0}.cz-card{padding:21px}}
+</style>
 </head>
 <body>
-    <header>
-        <a href="index.html">
-            <img src="images/logo.png" alt="Comic Zone" class="site-logo" />
-        </a>
-        <nav>
-            <ul>
-                <li><a href="index.html" aria-current="page">Home</a> <span class="you-are-here">&larr; You are here</span></li>
-                <li><a href="guides.html">Guides</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="license.html">License</a></li>
-                <li><a href="forum4.html">Forum</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h1>Coming Soon</h1>
-        <p>Comic Zone is coming soon!</p>
-        <p>Comic Zone is a macOS application for managing and reading comic books.
-            It's based off the popular Windows Comic Rack app.
-        </p>
-        <section>
-            <h2>What's already added</h2>
-            <ul>
-                <li>Comic Vine scraper</li>
-                <li>File organizer</li>
-                
-            </ul>
-        </section>
-        <section>
-            <h2>What's in progress</h2>
-            <p>Nothing in progress right now — check back soon!</p>
-        </section>
-        <section>
-            <h2>What's planned</h2>
-            <ul>
-                <li>Comic Reader companion for iOS</li>
-                <li>Sharing functionality</li>
-                <li>Web comics ability</li>
-                <li>Language packs</li>
-                
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <small>&copy; 2026 Comic Zone</small>
-    </footer>
-</body>
-</html>
+<header><a href="index.html"><img src="images/logo.png" alt="Comic Zone" class="site-logo"></a><nav><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="license.html">License</a></li><li><a href="forum4.html">Forum</a></li></ul></nav></header>
+<main class="cz-shell">
+<section class="cz-hero"><div class="cz-pill"><span class="cz-dot"></span>Coming soon for macOS</div><h1>Your comics.<br><span>One awesome place.</span></h1><p>Meet Comic Zone, a macOS app for organizing, managing, and reading your comic collection, inspired by the popular ComicRack app for Windows.</p><div class="cz-actions"><a class="cz-button cz-primary" href="guides.html">Explore the Guides ↗</a><a class="cz-button cz-secondary" href="forum4.html">Join the Community ↗</a></div></section>
+<section class="cz-section"><h2 class="cz-heading">✦ What's already added</h2><div class="cz-grid">
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5M10.5 7.5v5"/></svg></div><h3>Comic Vine Scraper</h3><p>Look up comic information to help keep your collection's metadata organized.</p><span class="cz-status">✓ Added</span></article>
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10H3z"/><path d="M3 11h18"/></svg></div><h3>File Organizer</h3><p>Keep your comic files organized and make managing your library easier.</p><span class="cz-status">✓ Added</span></article>
+</div></section>
+<section class="cz-section"><h2 class="cz-heading">◷ What's in progress</h2><div class="cz-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Nothing in progress right now — check back soon!</span></div></section>
+<section class="cz-section"><h2 class="cz-heading">✧ What's planned</h2><div class="cz-grid">
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>iOS Comic Reader</h3><p>A companion reader to take your comic collection beyond your Mac.</p><span class="cz-status planned">Planned</span></article>
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.4"/></svg></div><h3>Sharing Functionality</h3><p>More ways to share comics and collection information.</p><span class="cz-status planned">Planned</span></article>
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18m0-18c5 5 5 13 0 18"/></svg></div><h3>Web Comics</h3><p>Explore support for reading web-based comics.</p><span class="cz-status planned">Planned</span></article>
+<article class="cz-card"><div class="cz-card-icon"><svg viewBox="0 0 24 24"><path d="M3 5h12M9 3v2m4 0c0 7-4 11-9 13m2-9c2 4 5 7 9 9M14 21l4-11 4 11m-7-3h6"/></svg></div><h3>Language Packs</h3><p>Make Comic Zone more accessible with additional language options.</p><span class="cz-status planned">Planned</span></article>
+</div></section>
+<section class="cz-bottom"><h2>Follow the journey</h2><p>Browse the guides, explore features, and connect with other Comic Zone users.</p><div class="cz-actions"><a class="cz-button cz-primary" href="guides.html">Read the Guides ↗</a><a class="cz-button cz-secondary" href="forum4.html">Visit the Forum ↗</a></div></section>
+</main><footer><small>&copy; 2026 Comic Zone</small></footer>
+</body></html>
