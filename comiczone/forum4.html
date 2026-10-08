@@ -830,7 +830,13 @@ a{color:#b6c4ff}a:hover{color:#d5bdff}
 
         function initFirebase() {
             try {
-                firebaseApp = firebase.initializeApp(firebaseConfig);
+                if (typeof window.firebase === 'undefined') {
+                    throw new Error('Firebase scripts did not load. Check network access, content blockers, or the browser console.');
+                }
+                if (typeof firebase.auth !== 'function' || typeof firebase.firestore !== 'function') {
+                    throw new Error('Firebase Authentication or Firestore SDK did not load.');
+                }
+                firebaseApp = firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
                 auth = firebase.auth();
                 db = firebase.firestore();
                 // Long polling instead of a streaming connection: Safari's Advanced Privacy Protection can stall the stream, leaving loads hanging.
@@ -840,7 +846,7 @@ a{color:#b6c4ff}a:hover{color:#d5bdff}
                 return true;
             } catch (error) {
                 console.error('Firebase initialization error:', error);
-                showError('Failed to initialize Firebase. Please check your configuration.');
+                showError('Failed to initialize Firebase: ' + (error.message || 'Unknown error') + '.');
                 return false;
             }
         }
