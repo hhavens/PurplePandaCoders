@@ -544,67 +544,6 @@
                 min-width: 100px;
             }
         }
-    
-        /* Comic Zone unified dark theme — presentation only */
-        :root {
-            --primary: #9aaaff; --primary-dark: #778eea; --primary-light: #c0caff;
-            --secondary: #f3f6ff; --accent: #c8a8ff;
-            --success: #63d9b2; --warning: #ffca80; --danger: #ff8f9f;
-            --light-bg: #10182a; --border: #30415f;
-            --text: #e5ebfa; --text-light: #b1bed4;
-            --card-shadow: 0 12px 32px rgba(0,0,0,.18);
-            --hover-shadow: 0 18px 45px rgba(0,0,0,.28);
-        }
-        body { background: radial-gradient(ellipse 100% 580px at 50% -160px,#25365d 0%,#111a2e 58%,#0b1020 100%) fixed; color:var(--text); }
-        .admin-header { background:rgba(12,19,35,.94); border-bottom:1px solid var(--border); box-shadow:0 8px 30px rgba(0,0,0,.12); }
-        .logo-icon { background:linear-gradient(135deg,#738bf0,#a17be4); box-shadow:0 6px 22px rgba(132,132,245,.25); }
-        .logo-text,.stat-value,.section-title,.modal-title,.form-label,.admin-table th { color:var(--secondary); }
-        .logo-text span { color:#bca9ff; }
-        .nav-link { color:#c5d0e6; border-radius:999px; }
-        .nav-link:hover { background:#202e4b; color:#fff; }
-        .nav-link.active { background:linear-gradient(120deg,#6378d5,#8665cc); color:#fff; }
-        .stat-card,.admin-section,.modal,.toast { background:linear-gradient(155deg,#1c2842,#141c2e); border:1px solid var(--border); border-radius:18px; box-shadow:var(--card-shadow); }
-        .stat-card:hover { border-color:#687ac2; }
-        .stat-icon.users { background:#2c3963; color:#a9b9ff; }
-        .stat-icon.topics { background:#1c4946; color:#7fe6bd; }
-        .stat-icon.posts { background:#4a382b; color:#ffca80; }
-        .stat-icon.online { background:#293f60; color:#a5d3ff; }
-        .section-header { border-bottom:1px solid var(--border); gap:14px; }
-        .admin-table { color:var(--text); }
-        .admin-table th { background:#202d48; border-bottom:1px solid var(--border); }
-        .admin-table td { border-bottom:1px solid #2a3851; }
-        .admin-table tr:hover { background:#23324e; }
-        .admin-table a { color:#b4c3ff; }
-        .btn { border-radius:9px; }
-        .btn-primary { background:linear-gradient(115deg,#7188e7,#866bda); color:#fff; }
-        .btn-primary:hover { background:linear-gradient(115deg,#8198f5,#967ce8); }
-        .btn-outline { background:#202e47; color:#e7edfc; border-color:#3c4b69; }
-        .btn-outline:hover { background:#2b3b5b; }
-        .btn-success { background:#207d69; color:#fff; }
-        .btn-warning { background:#ad7528; color:#fff; }
-        .btn-danger { background:#b94b66; color:#fff; }
-        .form-control,.form-select,.search-input { background:#101b30; color:#f3f6ff; border:1px solid #425272; border-radius:9px; }
-        .form-control:focus,.form-select:focus,.search-input:focus { outline:none; border-color:#a3b1ff; box-shadow:0 0 0 3px rgba(154,170,255,.16); }
-        .form-control::placeholder,.search-input::placeholder { color:#9daecc; }
-        option { background:#17243b; color:#f3f6ff; }
-        input[type=checkbox] { accent-color:#9aaaff; }
-        .close-modal { color:#d1daf0; }
-        .close-modal:hover { background:#2c3a56; color:#fff; }
-        .tab-btn { color:#b1bed4; }
-        .tab-btn:hover,.tab-btn.active { color:#c4b7ff; }
-        .tab-btn.active { border-bottom-color:#9aaaff; }
-        .badge-admin { background:#532d47; color:#ffb0c3; }
-        .badge-moderator { background:#2c3963; color:#b6c4ff; }
-        .badge-member { background:#20473e; color:#89e5be; }
-        .badge-banned { background:#303d53; color:#c1cbdd; }
-        .admin-intro { padding:34px 36px; margin:25px 0 10px; background:linear-gradient(115deg,#202f55,#2a2454 80%); border:1px solid #3c4672; border-radius:20px; }
-        .admin-intro .eyebrow { font-size:12px; letter-spacing:.15em; text-transform:uppercase; font-weight:700; color:#c8b8ff; margin-bottom:10px; }
-        .admin-intro h1 { font-size:clamp(26px,3vw,38px); color:#fff; margin:0 0 8px; }
-        .admin-intro p { color:#c6d0e8; line-height:1.6; }
-        .admin-footer { margin-top:42px; padding:25px 20px; border-top:1px solid #2b3954; text-align:center; color:#9eacc8; font-size:13px; }
-        .admin-footer a { color:#b5c3ff; text-decoration:none; }
-        @media(max-width:768px) { .admin-intro { padding:24px; } .section-header { flex-wrap:wrap; } .admin-section { padding:18px; } .nav-links { gap:6px; } .nav-link { padding:7px 10px; } }
-
     </style>
 </head>
 <body>
@@ -653,11 +592,6 @@
 
     <!-- Main Content -->
     <main class="container">
-        <section class="admin-intro" aria-label="Admin dashboard introduction">
-            <div class="eyebrow">ComicHub · Administration</div>
-            <h1>Forum dashboard</h1>
-            <p>Manage your community, discussions, members, and forum settings in one place.</p>
-        </section>
         <!-- Dashboard Tab -->
         <div id="dashboard-tab" class="tab-content active">
             <!-- Stats Grid -->
@@ -922,8 +856,6 @@
             </div>
         </div>
     </main>
-
-    <footer class="admin-footer">© 2026 Comic Zone · <a href="forum4.html">Forum</a> · <a href="index.html">Comic Zone Home</a></footer>
 
     <!-- Modals -->
     <div class="modal-overlay" id="editUserModal">
