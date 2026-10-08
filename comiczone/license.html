@@ -1,136 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Software License Agreement for Comic Zone, a macOS application for managing and reading comic books." />
-    <title>License Agreement – Comic Zone</title>
-    <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body>
-    <header>
-        <a href="index.html">
-            <img src="images/logo.png" alt="Comic Zone" class="site-logo" />
-        </a>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="guides.html">Guides</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="license.html" aria-current="page">License</a> <span class="you-are-here">&larr; You are here</span></li>
-                <li><a href="forum4.html">Forum</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h1>Software License Agreement</h1>
-        <p>Effective date: September 3, 2026</p>
-        <p>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Software License Agreement for Comic Zone, a macOS application for managing and reading comic books."><title>License Agreement – Comic Zone</title><link rel="stylesheet" href="css/styles.css"><style>
+:root{--cz-bg:#0b1020;--cz-card:#161e32;--cz-line:#2a3650;--cz-text:#f3f6ff;--cz-muted:#b1bed4;--cz-accent:#8b9dff}
+body{background:radial-gradient(ellipse at 50% 0%,#202c52 0%,#0b1020 55%);color:var(--cz-text);min-height:100vh}
+.cz-shell{max-width:1120px;margin:0 auto;padding:40px 24px 75px}
+.cz-hero{text-align:center;padding:55px 15px 50px}
+.cz-pill{display:inline-flex;align-items:center;gap:9px;border:1px solid #596aa1;background:#27365b;color:#e4eaff;border-radius:999px;padding:8px 15px;font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+.cz-dot{width:8px;height:8px;border-radius:50%;background:#aab7ff;box-shadow:0 0 12px #879bff}
+.cz-hero h1{font-size:clamp(2.8rem,7vw,5.2rem);letter-spacing:-.055em;line-height:1.08;margin:22px 0 16px;color:white}
+.cz-hero h1 span{background:linear-gradient(100deg,#91baff,#c8a8ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.cz-hero p{max-width:660px;margin:0 auto;color:#c0cce0;font-size:1.14rem;line-height:1.75}
+.cz-section{margin-top:32px}.cz-heading{margin:0 0 18px;font-size:1.55rem;color:white}
+.cz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.cz-card{border:1px solid var(--cz-line);border-radius:18px;background:linear-gradient(150deg,#1c2842,#141c2e);padding:25px;transition:transform .2s,border-color .2s;scroll-margin-top:30px}
+.cz-card:hover{transform:translateY(-4px);border-color:#697fb5}
+.cz-card-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#303d67;color:#c5cfff;margin-bottom:17px}
+.cz-card-icon svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cz-card h3{color:white;margin:0 0 8px;font-size:1.13rem}.cz-card p{color:var(--cz-muted);line-height:1.6;margin:0 0 18px;font-size:.96rem}
+.cz-link{display:inline-flex;align-items:center;gap:8px;color:#c1cbff!important;font-weight:700;text-decoration:none!important}.cz-link:hover{text-decoration:underline!important;color:white!important}
+.cz-toc{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:26px auto 0;max-width:850px}
+.cz-toc a{border:1px solid #45577f;border-radius:999px;background:#1c2945;color:#dbe4ff!important;padding:8px 13px;text-decoration:none!important;font-size:.88rem;font-weight:600}.cz-toc a:hover{background:#33466f}
+.cz-bottom{margin-top:45px;text-align:center;border:1px solid #394a73;border-radius:20px;padding:33px 20px;background:linear-gradient(115deg,#26365c,#1c2542)}.cz-bottom h2{color:white;margin:0 0 8px}.cz-bottom p{color:#c8d2e5;margin:0 0 22px}
+.cz-button{display:inline-flex;align-items:center;gap:9px;padding:12px 19px;border-radius:12px;text-decoration:none!important;font-weight:700;transition:transform .2s;border:1px solid #586b9d}.cz-button:hover{transform:translateY(-3px)}.cz-primary{background:#9aaaff;color:#101832!important;border-color:#9aaaff}.cz-secondary{background:#202d4c;color:#f2f5ff!important}
+.cz-actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+@media(max-width:650px){.cz-grid{grid-template-columns:1fr}.cz-shell{padding:18px 16px 50px}.cz-hero{padding:40px 0}.cz-card{padding:21px}}
+@media(prefers-reduced-motion:reduce){.cz-card,.cz-button{transition:none}.cz-card:hover,.cz-button:hover{transform:none}}
+
+
+.cz-license{max-width:860px;margin:0 auto}.cz-license .cz-card{margin-bottom:16px;padding:28px 32px}.cz-license .cz-card:hover{transform:none}.cz-license h2{display:flex;align-items:center;gap:13px;color:#fff;font-size:1.3rem;margin:0 0 15px}.cz-number{display:inline-grid;place-items:center;flex-shrink:0;width:36px;height:36px;border-radius:11px;background:#303d67;color:#c5cfff;font-size:.95rem}.cz-license p,.cz-license li{color:#c0cce0;line-height:1.8}.cz-license ul{padding-left:24px}.cz-license li{margin:5px 0}.cz-license a{color:#c1cbff}.cz-intro{max-width:770px;margin:0 auto 24px;color:#c0cce0;line-height:1.8}.cz-date{color:#dbe4ff;font-weight:600;margin-bottom:20px}.cz-license .cz-card:last-child{margin-bottom:0}@media(max-width:650px){.cz-license .cz-card{padding:22px 19px}.cz-license h2{font-size:1.13rem}}
+</style></head><body><header><a href="index.html"><img src="images/logo.png" alt="Comic Zone" class="site-logo"></a><nav><ul><li><a href="index.html">Home</a></li><li><a href="guides.html">Guides</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="license.html" aria-current="page">License</a></li><li><a href="forum4.html">Forum</a></li></ul></nav></header><main class="cz-shell"><div class="cz-hero"><div class="cz-pill"><span class="cz-dot"></span>Comic Zone legal</div><h1>Software <span>License Agreement.</span></h1><p>Important information about using Comic Zone.</p></div><div class="cz-license"><div class="cz-intro"><div class="cz-date">Effective date: September 3, 2026</div><p>
             This Software License Agreement ("Agreement") governs your use of Comic Zone
             (the "Application"). By installing or using the Application, you agree to be
             bound by the terms of this Agreement.
-        </p>
+        </p></div><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">01</span>1. License Grant</h2>
 
-        <section>
-            <h2>1. License Grant</h2>
-            <p>Subject to this Agreement, we grant you a limited, non-exclusive, non-transferable, revocable license to:</p>
-            <ul>
-                <li>Install and use the Application for personal, non-commercial purposes</li>
-                <li>Install the Application on devices you own or control</li>
-                <li>Receive updates and support as made available by us</li>
-            </ul>
-        </section>
+<p>Subject to this Agreement, we grant you a limited, non-exclusive, non-transferable, revocable license to:</p>
+<ul>
+<li>Install and use the Application for personal, non-commercial purposes</li>
+<li>Install the Application on devices you own or control</li>
+<li>Receive updates and support as made available by us</li>
+</ul>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">02</span>2. Restrictions</h2>
 
-        <section>
-            <h2>2. Restrictions</h2>
-            <p>You may not:</p>
-            <ul>
-                <li>Reverse engineer, decompile, or disassemble the Application</li>
-                <li>Modify, adapt, or create derivative works based on the Application</li>
-                <li>Remove or obscure any proprietary notices or labels</li>
-                <li>Redistribute or resell the Application without authorization</li>
-                <li>Use the Application for any unlawful purpose</li>
-                <li>Use the Application to develop a competing product</li>
-            </ul>
-        </section>
+<p>You may not:</p>
+<ul>
+<li>Reverse engineer, decompile, or disassemble the Application</li>
+<li>Modify, adapt, or create derivative works based on the Application</li>
+<li>Remove or obscure any proprietary notices or labels</li>
+<li>Redistribute or resell the Application without authorization</li>
+<li>Use the Application for any unlawful purpose</li>
+<li>Use the Application to develop a competing product</li>
+</ul>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">03</span>3. Your Content</h2>
 
-        <section>
-            <h2>3. Your Content</h2>
-            <p>
+<p>
                 Comic files, library organization, and reading data that you manage in the
                 Application remain your property and are stored locally on your device. Any
                 content you post to the ComicHub forum remains subject to our
                 <a href="privacy.html">Privacy Policy</a> and applicable forum guidelines.
             </p>
-        </section>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">04</span>4. Copyright and Trademarks</h2>
 
-        <section>
-            <h2>4. Copyright and Trademarks</h2>
-            <p>
+<p>
                 All content, features, and functionality of Comic Zone are owned by Purple
                 Panda Coders and are protected by applicable copyright, trademark, and other
                 intellectual property laws. Apple, the Apple logo, and macOS are trademarks
                 of Apple Inc., registered in the U.S. and other countries.
             </p>
-        </section>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">05</span>5. Disclaimer of Warranty</h2>
 
-        <section>
-            <h2>5. Disclaimer of Warranty</h2>
-            <p>
+<p>
                 THE APPLICATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
                 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
                 FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
             </p>
-            <p>We do not guarantee that:</p>
-            <ul>
-                <li>The Application will meet your requirements</li>
-                <li>The Application will be uninterrupted or error-free</li>
-                <li>Comic metadata retrieved from third-party sources will be accurate or complete</li>
-            </ul>
-        </section>
+<p>We do not guarantee that:</p>
+<ul>
+<li>The Application will meet your requirements</li>
+<li>The Application will be uninterrupted or error-free</li>
+<li>Comic metadata retrieved from third-party sources will be accurate or complete</li>
+</ul>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">06</span>6. Limitation of Liability</h2>
 
-        <section>
-            <h2>6. Limitation of Liability</h2>
-            <p>
+<p>
                 IN NO EVENT SHALL WE BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR
                 CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH YOUR USE OR
                 INABILITY TO USE THE APPLICATION.
             </p>
-            <p>We are not responsible for:</p>
-            <ul>
-                <li>Loss of comic files or library data due to device failure or user error</li>
-                <li>Changes to third-party services, such as the Comic Vine API, that affect functionality</li>
-                <li>Content posted by other users on the ComicHub forum</li>
-            </ul>
-        </section>
+<p>We are not responsible for:</p>
+<ul>
+<li>Loss of comic files or library data due to device failure or user error</li>
+<li>Changes to third-party services, such as the Comic Vine API, that affect functionality</li>
+<li>Content posted by other users on the ComicHub forum</li>
+</ul>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">07</span>7. Termination</h2>
 
-        <section>
-            <h2>7. Termination</h2>
-            <p>
+<p>
                 This license is effective until terminated. Your rights under this Agreement
                 will terminate automatically without notice if you fail to comply with any
                 term of this Agreement.
             </p>
-        </section>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">08</span>8. Changes to This Agreement</h2>
 
-        <section>
-            <h2>8. Changes to This Agreement</h2>
-            <p>
+<p>
                 We may update this Agreement from time to time. Changes will be posted on this
                 page with an updated "Effective date."
             </p>
-        </section>
+</section><section class="cz-card"><h2><span class="cz-number" aria-hidden="true">✉</span>Contact Us</h2>
 
-        <section>
-            <h2>Contact Us</h2>
-            <p>
+<p>
                 If you have questions about this Agreement, contact us at
                 <a href="mailto:support@purplepandacoders.com?subject=Comic%20Zone">support@purplepandacoders.com</a>.
             </p>
-        </section>
-    </main>
-    <footer>
-        <small>&copy; 2026 Comic Zone</small>
-    </footer>
-</body>
-</html>
+</section></div></main><footer><small>&copy; 2026 Comic Zone</small></footer></body></html>
