@@ -757,6 +757,8 @@
                 firebaseApp = firebase.initializeApp(firebaseConfig);
                 auth = firebase.auth();
                 db = firebase.firestore();
+                // Long polling instead of a streaming connection: Safari's Advanced Privacy Protection can stall the stream, leaving loads hanging.
+                db.settings({ experimentalForceLongPolling: true, merge: true });
                 
                 console.log('Firebase initialized successfully');
                 return true;
@@ -969,7 +971,7 @@
 
             try {
                 // Try to load categories from Firestore
-                const snapshot = await db.collection('categories').get();
+                const snapshot = await withTimeout(db.collection('categories').get());
                 
                 if (snapshot.empty) {
                     // Create default categories if none exist
@@ -980,7 +982,7 @@
                 // Count topics and posts per category from the topics themselves
                 // (each topic is its opening post plus its replies)
                 const stats = {};
-                const topicsSnapshot = await db.collection('topics').get();
+                const topicsSnapshot = await withTimeout(db.collection('topics').get());
                 topicsSnapshot.forEach(doc => {
                     const topic = doc.data();
                     const catStats = stats[topic.category] || (stats[topic.category] = { topics: 0, posts: 0 });
@@ -1096,10 +1098,10 @@
 
         async function loadRecentTopics() {
             try {
-                const snapshot = await db.collection('topics')
+                const snapshot = await withTimeout(db.collection('topics')
                     .orderBy('createdAt', 'desc')
                     .limit(10)
-                    .get();
+                    .get());
                 
                 if (snapshot.empty) {
                     return `
@@ -1179,11 +1181,11 @@
 
             try {
                 const since = new Date(Date.now() - TRENDING_WINDOW_DAYS * 86400000).toISOString();
-                const snapshot = await db.collection('topics')
+                const snapshot = await withTimeout(db.collection('topics')
                     .where('lastReplyAt', '>=', since)
                     .orderBy('lastReplyAt', 'desc')
                     .limit(50)
-                    .get();
+                    .get());
 
                 const topics = snapshot.docs
                     .map(doc => ({ id: doc.id, data: doc.data() }))
@@ -1225,6 +1227,9 @@
                         <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 20px;"></i>
                         <h3>Error Loading Trending</h3>
                         <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadTrending()" style="margin-top: 20px;">
+                            <i class="fas fa-sync-alt"></i> Retry
+                        </button>
                     </div>
                 `;
             }
@@ -1273,10 +1278,10 @@
             `;
 
             try {
-                const snapshot = await db.collection('users')
+                const snapshot = await withTimeout(db.collection('users')
                     .orderBy('joinDate', 'desc')
                     .limit(50)
-                    .get();
+                    .get());
 
                 if (token !== viewToken) return;
                 if (snapshot.empty) {
@@ -1322,6 +1327,9 @@
                         <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 20px;"></i>
                         <h3>Error Loading Members</h3>
                         <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadMembers()" style="margin-top: 20px;">
+                            <i class="fas fa-sync-alt"></i> Retry
+                        </button>
                     </div>
                 `;
             }
@@ -1518,6 +1526,17 @@
                     </div>
                 </div>
             `;
+        }
+
+        // Reject if a Firestore read hangs, so the page shows an error with Retry instead of spinning forever.
+        const LOAD_TIMEOUT_MS = 15000;
+
+        function withTimeout(promise, ms = LOAD_TIMEOUT_MS) {
+            let timer;
+            const timeout = new Promise((_, reject) => {
+                timer = setTimeout(() => reject(new Error('The forum took too long to respond. Check your connection and try again.')), ms);
+            });
+            return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
         }
 
         function formatTimeAgo(timestamp) {
