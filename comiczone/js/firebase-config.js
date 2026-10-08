@@ -27,18 +27,26 @@ async function initFirebase() {
         });
         storage = firebase.storage();
         
-        // Enable offline persistence
-        await db.enablePersistence()
-            .catch((err) => {
-                console.warn('Offline persistence not supported:', err.code);
-            });
-            
+        // Offline persistence is intentionally off: in Safari with Advanced Privacy Protection,
+        // enablePersistence() can hang on IndexedDB and block every page that awaits initFirebase().
+
         console.log('Firebase initialized successfully');
         return { auth, db, storage };
     } catch (error) {
         console.error('Firebase initialization error:', error);
         throw error;
     }
+}
+
+// Reject if a Firestore read hangs, so pages can show an error with Retry instead of spinning forever.
+const LOAD_TIMEOUT_MS = 15000;
+
+function withTimeout(promise, ms = LOAD_TIMEOUT_MS) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('The forum took too long to respond. Check your connection and try again.')), ms);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
 // Algolia Search Configuration

@@ -10,7 +10,7 @@ function waitForAuthUser() {
 }
 
 async function loadProfile() {
-    viewerUser = await waitForAuthUser();
+    viewerUser = await withTimeout(waitForAuthUser());
 
     const urlParams = new URLSearchParams(window.location.search);
     const requestedId = urlParams.get('id');
@@ -22,7 +22,7 @@ async function loadProfile() {
     }
 
     try {
-        const userDoc = await db.collection('users').doc(profileUserId).get();
+        const userDoc = await withTimeout(db.collection('users').doc(profileUserId).get());
         if (!userDoc.exists) {
             renderNotFound();
             return;
@@ -34,7 +34,7 @@ async function loadProfile() {
         loadUserTopics(profileUserId);
     } catch (error) {
         console.error('Error loading profile:', error);
-        showToast('Error loading profile', 'danger');
+        renderLoadError(error);
     }
 }
 
@@ -141,9 +141,9 @@ async function loadUserTopics(userId) {
 
     try {
         // Filter on authorId alone (no composite index needed) and sort newest-first here
-        const snapshot = await db.collection('topics')
+        const snapshot = await withTimeout(db.collection('topics')
             .where('authorId', '==', userId)
-            .get();
+            .get());
         const topics = snapshot.docs
             .sort((a, b) => String(b.data().createdAt).localeCompare(String(a.data().createdAt)))
             .slice(0, 10);
@@ -184,6 +184,15 @@ function renderNotFound() {
     document.getElementById('profileContent').innerHTML = `
         <div class="profile-card" style="text-align: center;">
             <p style="color: var(--text-light);">This user couldn't be found.</p>
+        </div>
+    `;
+}
+
+function renderLoadError(error) {
+    document.getElementById('profileContent').innerHTML = `
+        <div class="profile-card" style="text-align: center;">
+            <p style="margin-bottom: 15px; color: var(--text-light);">Couldn't load this profile: ${error.message || error}</p>
+            <button class="btn btn-primary" onclick="loadProfile()"><i class="fas fa-sync-alt"></i> Retry</button>
         </div>
     `;
 }
