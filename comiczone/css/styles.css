@@ -60,6 +60,15 @@ nav a {
   transition: color 0.2s ease;
 }
 
+nav a[aria-current="page"]::after {
+  content: "\2190  You are here";
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: #888;
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
 nav a:hover,
 nav a:focus {
   color: #005f99;
