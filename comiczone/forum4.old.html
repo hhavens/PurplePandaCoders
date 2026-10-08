@@ -593,75 +593,6 @@
                 font-size: 28px;
             }
         }
-    <style>
-
-/* Comic Zone unified dark theme — presentation only; Firebase logic unchanged */
-:root {
- --primary:#9aaaff;--primary-dark:#8395f5;--primary-light:#bdc7ff;
- --secondary:#f3f6ff;--accent:#c8a8ff;--success:#34d399;
- --warning:#fbbf24;--danger:#fb7185;--light-bg:#111a2d;
- --border:#33415e;--text:#e4eaff;--text-light:#b1bed4;
- --card-shadow:0 10px 30px rgba(0,0,0,.18);
- --hover-shadow:0 18px 40px rgba(0,0,0,.3);
-}
-html{scroll-behavior:smooth}
-body{background:radial-gradient(ellipse at 50% 0%,#202c52 0%,#0b1020 58%);background-attachment:fixed;color:var(--text);min-height:100vh}
-a{color:#b6c4ff}a:hover{color:#d5bdff}
-.forum-header{background:rgba(13,20,37,.94);border-bottom:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.18);backdrop-filter:blur(16px);padding:17px 0}
-.logo-icon{background:linear-gradient(135deg,#647bdb,#a879d9);box-shadow:0 5px 22px rgba(139,157,255,.22);border-radius:13px}
-.logo-text{color:#f3f6ff}.logo-text span{color:#bba8ff}
-.search-input,.form-input{background:#121c31;color:#f3f6ff;border:1px solid #3a496b;border-radius:12px}
-.search-input::placeholder,.form-input::placeholder{color:#91a0ba}
-.search-input:focus,.form-input:focus{border-color:#9aaaff;box-shadow:0 0 0 3px rgba(154,170,255,.15)}
-.btn{border-radius:11px;min-height:40px;transition:transform .2s,background .2s,border-color .2s}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:linear-gradient(110deg,#9aaaff,#b5a2ff);color:#101832}
-.btn-primary:hover{background:linear-gradient(110deg,#b2bfff,#c7b6ff)}
-.btn-outline{border:1px solid #46587b;color:#e4eaff;background:#202d4c}
-.btn-outline:hover{background:#2c3b5d;border-color:#8296c9}
-.user-avatar,.topic-avatar{background:linear-gradient(135deg,#697be0,#9d78d8)}
-.forum-nav{background:rgba(18,27,46,.92);border-bottom:1px solid var(--border);padding:11px 0}
-.nav-links{gap:9px;scrollbar-color:#586a9a transparent}
-.nav-link{border-radius:11px;color:#c5d0e5;padding:11px 17px}
-.nav-link:hover{background:#27365b;color:#f3f6ff}
-.nav-link.active{background:linear-gradient(110deg,#344a80,#4b3979);color:white;box-shadow:inset 0 0 0 1px #6774b3}
-.forum-content{padding:36px 0 70px}
-.forum-intro{background:linear-gradient(115deg,#26365c,#1c2542);border:1px solid #394a73;border-radius:22px;padding:32px 34px;margin-bottom:30px;position:relative;overflow:hidden}
-.forum-intro:after{content:'✦';position:absolute;right:38px;top:4px;font-size:135px;color:rgba(181,162,255,.09);pointer-events:none}
-.forum-eyebrow{display:inline-flex;align-items:center;gap:8px;color:#d4d9ff;border:1px solid #6172aa;border-radius:99px;padding:6px 12px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:#28385e}
-.forum-intro h1{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.04em;line-height:1.12;color:#fff;margin:17px 0 10px}
-.forum-intro h1 span{color:#c6adff}
-.forum-intro p{color:#c8d2e5;max-width:680px;font-size:1.02rem}
-.forum-intro-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.forum-intro-actions a{text-decoration:none}
-.page-title{color:#fff;font-size:clamp(1.5rem,3vw,2rem)}
-.page-title::after{background:linear-gradient(90deg,#91baff,#c8a8ff);height:3px}
-.categories-grid{gap:19px}
-.category-card{background:linear-gradient(150deg,#1c2842,#141c2e);border:1px solid #2a3650;border-radius:18px;padding:24px;box-shadow:var(--card-shadow)}
-.category-card:hover{border-color:#778bc2;box-shadow:var(--hover-shadow)}
-.category-header{border-bottom-color:#35415c}
-.category-icon{background:#303d67;color:#c5cfff;border-radius:14px}
-.category-info h3,.topic-title{color:#f3f6ff}
-.category-info p,.category-stats,.latest-activity,.topic-meta,.last-activity{color:#b1bed4}
-.category-stats{border-top-color:#35415c}
-.topics-list{background:#161e32;border:1px solid #2a3650;border-radius:18px;box-shadow:var(--card-shadow)}
-.topics-header{background:#202c47;color:#e4eaff;border-bottom-color:#35415c}
-.topic-item{border-bottom-color:#2a3650}
-.topic-item:hover{background:#222f4e}
-.topic-category{background:#303d67;color:#c5cfff}
-.reply-count{background:#344a80;color:#e4eaff}
-.modal-overlay{background:rgba(4,8,19,.82);backdrop-filter:blur(6px)}
-.modal{background:linear-gradient(150deg,#202c47,#141c2e);border:1px solid #46587b;border-radius:20px;box-shadow:0 25px 80px rgba(0,0,0,.5);color:#e4eaff}
-.modal-title,.form-label{color:#f3f6ff}
-.auth-tabs{border-bottom-color:#394a66}.auth-tab{color:#b1bed4}.auth-tab.active{color:#c5cfff;border-bottom-color:#9aaaff}
-.error-message{background:#472533;color:#ffd5df;border:1px solid #87435b;border-radius:10px}
-.toast{background:#202c47;border:1px solid #425274;color:#f3f6ff;border-radius:12px}
-.forum-footer{background:#10182a;border-top:1px solid #2a3650;padding:26px 20px;color:#aab8d0;text-align:center}
-.forum-footer a{color:#b6c4ff;text-decoration:none}.forum-footer a:hover{text-decoration:underline}
-#categoryFilterBar{background:#202d4c!important;color:#e4eaff;border:1px solid #46587b}
-:focus-visible{outline:2px solid #c8a8ff;outline-offset:3px}
-@media(max-width:768px){.forum-intro{padding:26px 21px}.forum-intro:after{display:none}.forum-content{padding-top:22px}.header-content{align-items:stretch}.user-menu{justify-content:center;flex-wrap:wrap}.forum-intro-actions .btn{flex:1;justify-content:center}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
     </style>
 </head>
 <body>
@@ -758,7 +689,7 @@ a{color:#b6c4ff}a:hover{color:#d5bdff}
                 </div>
                 
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <a href="index.html" style="text-decoration: none; color: #d5dfff; font-weight: 600;">Comic Zone</a>
+                    <a href="index.html" style="text-decoration: none; color: var(--text); font-weight: 500;">Comic Zone</a>
                     <div class="user-menu" id="userMenu">
                         <!-- Will be populated by JavaScript -->
                     </div>
@@ -787,12 +718,6 @@ a{color:#b6c4ff}a:hover{color:#d5bdff}
                 <h1 class="page-title">Community Forum</h1>
             </div>
             
-            <section class="forum-intro" aria-label="Welcome to ComicHub">
-                <span class="forum-eyebrow"><i class="fas fa-comments"></i> The Comic Zone community</span>
-                <h1>Connect. Share. <span>Talk comics.</span></h1>
-                <p>Ask questions, share ideas, discuss your favorite comics, and connect with other Comic Zone readers.</p>
-                <div class="forum-intro-actions"><a href="guides.html" class="btn btn-outline"><i class="fas fa-book-open"></i> Explore Guides</a><a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Comic Zone Home</a></div>
-            </section>
             <!-- Categories will be loaded here -->
             <div id="categoriesContainer">
                 <div style="text-align: center; padding: 60px 0;">
@@ -803,7 +728,6 @@ a{color:#b6c4ff}a:hover{color:#d5bdff}
         </div>
     </main>
 
-    <footer class="forum-footer">&copy; 2026 Comic Zone &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="license.html">License</a> &nbsp;·&nbsp; <a href="guides.html">Guides</a></footer>
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth-compat.js"></script>
